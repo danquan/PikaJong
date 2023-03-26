@@ -1,16 +1,16 @@
 #include "tiles.h"
 #include "constant.h"
 
-/*Code for tilesObject*/
+/*Code for textureObject*/
 
-void tilesObject::free_memory()
+void textureObject::free_memory()
 {
     SDL_DestroyTexture(mTexture);
     mTexture = NULL;
     w = h = 0;
 }
 
-void tilesObject::assignTexture(SDL_Texture *textTure, int w, int h)
+void textureObject::assignTexture(SDL_Texture *textTure, int w, int h)
 {
     this->mTexture = textTure;
     this->w = w;
@@ -34,7 +34,7 @@ bool cellStatus::click() {
 }
 
 
-void cellStatus::set(tilesObject *tile, SDL_Rect dstRect) {
+void cellStatus::set(textureObject *tile, SDL_Rect dstRect) {
     this->tile = tile;
     this->dstRect = dstRect;
     this->isChosen = false;

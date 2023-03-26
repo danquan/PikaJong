@@ -5,12 +5,12 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-struct tilesObject {
+struct textureObject {
     SDL_Texture *mTexture;
     int w, h;
 
-    tilesObject(SDL_Texture *mTexture = NULL, int w = 0, int h = 0): mTexture(mTexture), w(w), h(h) {}
-    ~tilesObject() {
+    textureObject(SDL_Texture *mTexture = NULL, int w = 0, int h = 0): mTexture(mTexture), w(w), h(h) {}
+    ~textureObject() {
         free_memory();
     }
 
@@ -23,7 +23,7 @@ struct tilesObject {
 };
 
 struct cellStatus{
-    tilesObject *tile;
+    textureObject *tile;
     SDL_Rect dstRect; // Destination Rect, where this cell locate
     bool isChosen, isAppear;
 
@@ -38,7 +38,7 @@ struct cellStatus{
     bool getCheckChosen() {return isChosen;}
     SDL_Texture *getTexture() { return tile->getTexture(); }
     
-    void set(tilesObject *tile, SDL_Rect dstRect);
+    void set(textureObject *tile, SDL_Rect dstRect);
     void reset();
     bool click();
     void disAppear();

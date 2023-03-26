@@ -21,15 +21,20 @@ const int MAX_COLUMNS = 20;
 // Number of model of tile
 const int MAX_NUM_TILES = 22; // Base on number of tiles in list_tiles.txt
 
+const int BUTTON_WIDTH = 167; // Base on Button Size
+const int BUTTON_HEIGHT = 68; // Base on Button Size
+
 
 #ifdef __MAIN_H
-    tilesObject tile[MAX_NUM_TILES]; // for storing tiles
+    textureObject tile[MAX_NUM_TILES]; // for storing tiles
     SDL_Texture *chosen_Highlight = NULL; // use to highlight chosen cells
-    tilesObject win_Screen; // use to show when player win game
+    textureObject win_Screen; // use to show when player win game
+    textureObject startButton; // use for start game click
 #else
-    extern tilesObject tile[MAX_NUM_TILES]; // for storing tiles
+    extern textureObject tile[MAX_NUM_TILES]; // for storing tiles
     extern SDL_Texture *chosen_Highlight; // use to highlight chosen cells
-    extern tilesObject win_Screen; // use to show when player win game
+    extern textureObject win_Screen; // use to show when player win game
+    extern textureObject startButton; // use for start game click
 #endif
 
 enum type_Tiles {
@@ -38,7 +43,7 @@ enum type_Tiles {
     REGULAR_TILE
 };
 
-enum type_screen {
+enum type_Screen {
     MENU_SCREEN,
     GAME_SCREEN
 };

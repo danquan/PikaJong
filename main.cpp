@@ -8,10 +8,12 @@
 #include "constant.h"
 #include "definition.h"
 #include "game_run.h"
+#include "menu.h"
 
 void run()
 {
     assignLevel("1");
+    createStartButton();
 
     SDL_Event e;
     bool quit = false;
@@ -32,6 +34,8 @@ void run()
 
                 if (currentScreen == GAME_SCREEN)
                     processGameMouseDown(x, y);
+                else 
+                    processMenuMouseDown(x, y);
             }
         }
 
@@ -40,10 +44,11 @@ void run()
         SDL_RenderClear(gRenderer);
 
         // Do something here
-        if (currentScreen == GAME_SCREEN)
-        {
+        if(currentScreen == MENU_SCREEN)
+            menuRender(gRenderer);
+        else if (currentScreen == GAME_SCREEN)
             gameRender(gRenderer);
-        }
+        
 
         // Force Render
         SDL_RenderPresent(gRenderer);
@@ -112,6 +117,26 @@ void loadMedia(type_Tiles typeCell)
         win_Screen.assignTexture(temp_Win_Screen, tempWin->w, tempWin->h);
     }
 
+    /*load Button*/
+    {
+        SDL_Surface *tempButton = IMG_Load("images\\start_Button.png");
+        if (tempButton == NULL)
+        {
+            printf("Fail to load image %s\n", "images\\start_Button.png");
+            exit(-1);
+        }
+
+        SDL_Texture *temp_Button_texture = SDL_CreateTextureFromSurface(gRenderer, tempButton);
+
+        if (temp_Button_texture == NULL)
+        {
+            printf("Fail to create texture from image %s\n", "images\\start_Button.png");
+            exit(-1);
+        }
+
+        startButton.assignTexture(temp_Button_texture, tempButton->w, tempButton->h);
+    }
+
     /* load all image */
     std::ifstream in("list_tiles.txt"); // list of tiles
     for (int i = 0; i < MAX_NUM_TILES; ++i)
@@ -169,7 +194,7 @@ void initProgram()
     if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
         printf("Warning: Linear texture filtering not enabled!");
 
-    gWindow = SDL_CreateWindow("Mahjong 1.0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow("PikaJong 1.0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
     if (gWindow == NULL)
     {

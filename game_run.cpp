@@ -5,9 +5,9 @@
 #include <cassert>
 #include <cstring>
 #include <queue>
-#include "game_run.h"
 #include "constant.h"
 #include "definition.h"
+#include "game_run.h"
 
 const int dx[2][2] = {{0, 0}, {-1, 1}}, // Use for
           dy[2][2] = {{-1, 1}, {0, 0}}; // BFS Search
@@ -24,8 +24,10 @@ SDL_Rect last_match_pos; // Where to display
 
 std::string level;
 
+extern type_Screen currentScreen; // type_Screen
+
 void gameRender(SDL_Renderer *gRenderer) {
-    numRemains = 0;
+
     if(numRemains == 0) // Player won game
     { 
         SDL_Rect dstRect = {(SCREEN_WIDTH - win_Screen.w) / 2, (SCREEN_HEIGHT - win_Screen.h) / 2, win_Screen.w, win_Screen.h};
@@ -45,6 +47,8 @@ void gameRender(SDL_Renderer *gRenderer) {
                     if(cell[i][j].getCheckChosen())
                         SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &cell[i][j].dstRect);
                 }
+                else 
+                    SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &cell[i][j].dstRect);
     }
 }
 
@@ -150,7 +154,7 @@ void assignLevel(const std::string &lv) {
     int leftY = (SCREEN_HEIGHT - tableHeight) / 2;
 
     last_match = chosen_Highlight;
-    last_match_pos = {(leftX - TILE_WIDTH) / 2, (SCREEN_HEIGHT - TILE_HEIGHT) / 2, TILE_WIDTH, TILE_HEIGHT};
+    last_match_pos = {(leftX - TILE_WIDTH) / 2, (leftY + tableHeight - TILE_HEIGHT) / 2, TILE_WIDTH, TILE_HEIGHT};
 
     numRemains = numRows * numCols;
     std::vector<int> id(numRows * numCols / 2);
@@ -174,6 +178,6 @@ void resetCell(int x, int y) {
     cell[x][y].reset();
 }
 
-void setCell(int x, int y, tilesObject *tile, SDL_Rect dstRect) {
+void setCell(int x, int y, textureObject *tile, SDL_Rect dstRect) {
     cell[x][y].set(tile, dstRect);
 }
