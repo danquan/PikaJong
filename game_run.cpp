@@ -11,27 +11,41 @@
 
 const int dx[2][2] = {{0, 0}, {-1, 1}}, // Use for
           dy[2][2] = {{-1, 1}, {0, 0}}; // BFS Search
+int par[MAX_ROWS + 2][MAX_COLUMNS + 2][2][3]; // for BFS Search
 
-int numCols;
-int numRows;
+int numCols, numRows, numRemains;
+cellStatus cell[MAX_ROWS][MAX_COLUMNS]; // status of cells in table
+
 int numChosen;
 std::pair<int, int> posChosen[2];
-cellStatus cell[MAX_ROWS][MAX_COLUMNS]; // status of cells in table
-int par[MAX_ROWS + 2][MAX_COLUMNS + 2][2][3]; // for BFS Search
+
+SDL_Texture *last_match; // The mahjong tile that player has just match 
+SDL_Rect last_match_pos; // Where to display
+
 std::string level;
 
 void gameRender(SDL_Renderer *gRenderer) {
+    numRemains = 0;
+    if(numRemains == 0) // Player won game
+    { 
+        SDL_Rect dstRect = {(SCREEN_WIDTH - win_Screen.w) / 2, (SCREEN_HEIGHT - win_Screen.h) / 2, win_Screen.w, win_Screen.h};
+        SDL_RenderCopy(gRenderer, win_Screen.getTexture(), NULL, &dstRect);
+    }
+    else 
+    {
+        SDL_RenderCopy(gRenderer, last_match, NULL, &last_match_pos);
 
-    for(int i = 0; i < numRows; ++i)
-        for(int j = 0; j < numCols; ++j) 
-            if( !cell[i][j].empty() ) {
-                
-                assert(cell[i][j].tile != NULL);
-                SDL_RenderCopy(gRenderer, cell[i][j].getTexture(), NULL, &cell[i][j].dstRect);
+        for(int i = 0; i < numRows; ++i)
+            for(int j = 0; j < numCols; ++j) 
+                if( !cell[i][j].empty() ) {
+                    
+                    assert(cell[i][j].tile != NULL);
+                    SDL_RenderCopy(gRenderer, cell[i][j].getTexture(), NULL, &cell[i][j].dstRect);
 
-                if(cell[i][j].getCheckChosen())
-                    SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &cell[i][j].dstRect);
-            }
+                    if(cell[i][j].getCheckChosen())
+                        SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &cell[i][j].dstRect);
+                }
+    }
 }
 
 void processGameMouseDown(int x, int y) {
@@ -54,11 +68,13 @@ void processGameMouseDown(int x, int y) {
 
     if(numChosen == 2) {
         if(cell[posChosen[0].first][posChosen[0].second].tile == cell[posChosen[1].first][posChosen[1].second].tile
-            &&  canReach(posChosen[0].first, posChosen[0].second,
-                         posChosen[1].first, posChosen[1].second)) {
+            &&  canReach(posChosen[0].first, posChosen[0].second, posChosen[1].first, posChosen[1].second)) {
             
             cell[posChosen[0].first][posChosen[0].second].disAppear();
             cell[posChosen[1].first][posChosen[1].second].disAppear();
+        
+            numRemains -= 2;
+            last_match = cell[posChosen[0].first][posChosen[0].second].getTexture();
         }
 
         
@@ -133,6 +149,10 @@ void assignLevel(const std::string &lv) {
     int leftX = (SCREEN_WIDTH - tableWidth) / 2;
     int leftY = (SCREEN_HEIGHT - tableHeight) / 2;
 
+    last_match = chosen_Highlight;
+    last_match_pos = {(leftX - TILE_WIDTH) / 2, (SCREEN_HEIGHT - TILE_HEIGHT) / 2, TILE_WIDTH, TILE_HEIGHT};
+
+    numRemains = numRows * numCols;
     std::vector<int> id(numRows * numCols / 2);
     for(auto &i : id) i = rand(0, MAX_NUM_TILES - 1);
 

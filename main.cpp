@@ -92,6 +92,26 @@ void loadMedia(type_Tiles typeCell)
         }
     }
 
+    /*load win Screen*/
+    {
+        SDL_Surface *tempWin = IMG_Load("images\\win.png");
+        if (tempWin == NULL)
+        {
+            printf("Fail to load image %s\n", "images\\win.png");
+            exit(-1);
+        }
+
+        SDL_Texture *temp_Win_Screen = SDL_CreateTextureFromSurface(gRenderer, tempWin);
+
+        if (temp_Win_Screen == NULL)
+        {
+            printf("Fail to create texture from image %s\n", "images\\win.png");
+            exit(-1);
+        }
+
+        win_Screen.assignTexture(temp_Win_Screen, tempWin->w, tempWin->h);
+    }
+
     /* load all image */
     std::ifstream in("list_tiles.txt"); // list of tiles
     for (int i = 0; i < MAX_NUM_TILES; ++i)
