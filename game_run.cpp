@@ -29,7 +29,6 @@ bool playedMusic = false;
 extern type_Screen currentScreen; // type_Screen
 
 void gameRender(SDL_Renderer *gRenderer) {
-    numRemains = 0;
     if(numRemains == 0) // Player won game
     {     
         // for(int i = 0; i * TILE_WIDTH < SCREEN_WIDTH; ++i)
