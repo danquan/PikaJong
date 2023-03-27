@@ -95,7 +95,16 @@ int32_t main()
             for(int j = 0; j < n; ++j)
                 res.emplace_back(i, j);
         
-        random_shuffle(res.begin(), res.end());
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
+        shuffle(res.begin(), res.end(), Rand);
 
         int cnt = 0;
 

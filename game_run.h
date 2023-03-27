@@ -5,6 +5,7 @@
 
 void gameRender(SDL_Renderer *Renderer); // Render play screen
 void assignLevel(const std::string &lv); // set level for game
+void createBackButton(); // use for back button
 
 void setCell(int x, int y, textureObject *tile, SDL_Rect dstRect);
 void resetCell(int x, int y);

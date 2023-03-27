@@ -14,6 +14,8 @@ void run()
 {
     assignLevel("1");
     createStartButton();
+    createBackButton();
+    createLevelChosen(gRenderer);
 
     SDL_Event e;
     bool quit = false;
@@ -34,7 +36,7 @@ void run()
 
                 if (currentScreen == GAME_SCREEN)
                     processGameMouseDown(x, y);
-                else 
+                else
                     processMenuMouseDown(x, y);
             }
         }
@@ -44,11 +46,10 @@ void run()
         SDL_RenderClear(gRenderer);
 
         // Do something here
-        if(currentScreen == MENU_SCREEN)
+        if (currentScreen == MENU_SCREEN)
             menuRender(gRenderer);
         else if (currentScreen == GAME_SCREEN)
             gameRender(gRenderer);
-        
 
         // Force Render
         SDL_RenderPresent(gRenderer);
@@ -59,12 +60,52 @@ int main(int argc, char *argv[])
 {
     initProgram();
     loadMedia();
+    loadFont();
     run();
     closeObject();
 }
 
+void loadFont()
+{
+    pixel_like_font = TTF_OpenFont("fonts\\pixel-like-font.ttf", 32);
+
+    if (pixel_like_font == NULL)
+    {
+        printf("Font pixel-like-font is not valid"); // print to debug;
+        exit(-1);
+    }
+}
+
+void loadImage(textureObject &ImageObject, const std::string &links)
+{
+    /*load Button*/
+    SDL_Surface *tempImage= IMG_Load(links.c_str());
+    if (tempImage == NULL)
+    {
+        printf("Fail to load image %s\n", links.c_str());
+        exit(-1);
+    }
+
+    SDL_Texture *temp_Image_texture = SDL_CreateTextureFromSurface(gRenderer, tempImage);
+
+    if (temp_Image_texture == NULL)
+    {
+        printf("Fail to create texture from image %s\n", links.c_str());
+        exit(-1);
+    }
+
+    ImageObject.assignTexture(temp_Image_texture, tempImage->w, tempImage->h);
+}
+
 void loadMedia(type_Tiles typeCell)
 {
+    /*Load Button*/
+    loadImage(startButton, "images\\buttons\\start_Button.png");
+    loadImage(backButton, "images\\buttons\\back_Button.png");
+
+    /*load win Screen*/
+    loadImage(win_Screen, "images\\backgrounds\\win.png");
+    loadImage(mahjong_Screen, "images\\backgrounds\\mahjong.png");
 
     std::string links;
     /*If Type of tile is chosen, then assign links to be the directory; otherwise, choose it by randomizing*/
@@ -76,7 +117,7 @@ void loadMedia(type_Tiles typeCell)
         else
             links = (rand(1, 1000) & 1) ? "images\\tiles\\Black\\" : "images\\tiles\\Regular\\";
     }
-    
+
     /*load highlight*/
     {
         SDL_Surface *tempChosen = IMG_Load((links + "chosen.png").c_str());
@@ -95,46 +136,6 @@ void loadMedia(type_Tiles typeCell)
             printf("Fail to create texture from image %s\n", (links + "chosen.png").c_str());
             exit(-1);
         }
-    }
-
-    /*load win Screen*/
-    {
-        SDL_Surface *tempWin = IMG_Load("images\\win.png");
-        if (tempWin == NULL)
-        {
-            printf("Fail to load image %s\n", "images\\win.png");
-            exit(-1);
-        }
-
-        SDL_Texture *temp_Win_Screen = SDL_CreateTextureFromSurface(gRenderer, tempWin);
-
-        if (temp_Win_Screen == NULL)
-        {
-            printf("Fail to create texture from image %s\n", "images\\win.png");
-            exit(-1);
-        }
-
-        win_Screen.assignTexture(temp_Win_Screen, tempWin->w, tempWin->h);
-    }
-
-    /*load Button*/
-    {
-        SDL_Surface *tempButton = IMG_Load("images\\start_Button.png");
-        if (tempButton == NULL)
-        {
-            printf("Fail to load image %s\n", "images\\start_Button.png");
-            exit(-1);
-        }
-
-        SDL_Texture *temp_Button_texture = SDL_CreateTextureFromSurface(gRenderer, tempButton);
-
-        if (temp_Button_texture == NULL)
-        {
-            printf("Fail to create texture from image %s\n", "images\\start_Button.png");
-            exit(-1);
-        }
-
-        startButton.assignTexture(temp_Button_texture, tempButton->w, tempButton->h);
     }
 
     /* load all image */

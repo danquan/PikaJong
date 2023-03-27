@@ -15,6 +15,7 @@ int par[MAX_ROWS + 2][MAX_COLUMNS + 2][2][3]; // for BFS Search
 
 int numCols, numRows, numRemains;
 cellStatus cell[MAX_ROWS][MAX_COLUMNS]; // status of cells in table
+cellStatus cellBackButton;
 
 int numChosen;
 std::pair<int, int> posChosen[2];
@@ -27,14 +28,21 @@ std::string level;
 extern type_Screen currentScreen; // type_Screen
 
 void gameRender(SDL_Renderer *gRenderer) {
-
+    
     if(numRemains == 0) // Player won game
-    { 
+    {     
+        // for(int i = 0; i * TILE_WIDTH < SCREEN_WIDTH; ++i)
+        // for(int j = 0; j * TILE_HEIGHT < SCREEN_HEIGHT; ++j)
+        //     if((i & 1) == (j & 1)) {
+        //         SDL_Rect tempRect = {i * TILE_WIDTH, j * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
+        //         SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &tempRect);
+        //     }
         SDL_Rect dstRect = {(SCREEN_WIDTH - win_Screen.w) / 2, (SCREEN_HEIGHT - win_Screen.h) / 2, win_Screen.w, win_Screen.h};
         SDL_RenderCopy(gRenderer, win_Screen.getTexture(), NULL, &dstRect);
     }
     else 
     {
+        SDL_RenderCopy(gRenderer, cellBackButton.getTexture(), NULL, &cellBackButton.dstRect); // for back button
         SDL_RenderCopy(gRenderer, last_match, NULL, &last_match_pos);
 
         for(int i = 0; i < numRows; ++i)
@@ -52,7 +60,23 @@ void gameRender(SDL_Renderer *gRenderer) {
     }
 }
 
+void createBackButton() {
+
+    int tableWidth =  20 * CELL_WIDTH;
+    int tableHeight = 11 * CELL_HEIGHT;
+    int leftX = (SCREEN_WIDTH - tableWidth) / 2;
+    int leftY = (SCREEN_HEIGHT - tableHeight) / 2;
+
+    SDL_Rect dstRect = {(leftX - BUTTON_WIDTH * 80 / 100) / 2, (leftY + CELL_HEIGHT - BUTTON_HEIGHT * 80 / 100) / 2, BUTTON_WIDTH * 80 / 100, BUTTON_HEIGHT * 80 / 100};
+    cellBackButton.set(&backButton, dstRect);
+}
+
 void processGameMouseDown(int x, int y) {
+
+    if(Inside(cellBackButton.dstRect, {x, y})) {
+        currentScreen = MENU_SCREEN;
+        return;
+    }
 
     for(int i = 0; i < numRows; ++i)
         for(int j = 0; j < numCols; ++j) 

@@ -1,5 +1,13 @@
 Chun.png
+Man1.png
+Man2.png
+Man3.png
+Man4.png
+Man5.png
 Man5-Dora.png
+Man6.png
+Man7.png
+Man8.png
 Man9.png
 Pin1.png
 Pin2.png
@@ -7,6 +15,8 @@ Pin3.png
 Pin4.png
 Pin5.png
 Pin5-Dora.png
+Pin6.png
+Pin7.png
 Pin8.png
 Pin9.png
 Sou1.png
@@ -20,3 +30,4 @@ Sou7.png
 Sou8.png
 Sou9.png
 Ton.png
+Pei.png

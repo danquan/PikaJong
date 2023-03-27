@@ -5,7 +5,7 @@
 #include "tiles.h"
 
 // Screen size
-const int SCREEN_WIDTH = 1280;
+const int SCREEN_WIDTH = 1260;
 const int SCREEN_HEIGHT = 780;
 
 // Tiles size
@@ -19,22 +19,34 @@ const int MAX_ROWS = 11;
 const int MAX_COLUMNS = 20;
 
 // Number of model of tile
-const int MAX_NUM_TILES = 22; // Base on number of tiles in list_tiles.txt
+const int MAX_NUM_TILES = 33; // Base on number of tiles in list_tiles.txt
 
-const int BUTTON_WIDTH = 167; // Base on Button Size
-const int BUTTON_HEIGHT = 68; // Base on Button Size
+const int BUTTON_WIDTH = 167; // Base on Button START Size
+const int BUTTON_HEIGHT = 68; // Base on Button START Size
+
+const int LEVEL_WIDTH = 120;
+const int LEVEL_HEIGHT = 30;
+
+const int MAHJONG_WIDTH = 720; // Base on Mahjong size
+const int MAHJONG_HEGHT = 540; // Base on Mahjong size
 
 
 #ifdef __MAIN_H
     textureObject tile[MAX_NUM_TILES]; // for storing tiles
     SDL_Texture *chosen_Highlight = NULL; // use to highlight chosen cells
     textureObject win_Screen; // use to show when player win game
+    textureObject mahjong_Screen; // use to show on menu
     textureObject startButton; // use for start game click
+    textureObject backButton; // use for back to menu screen
+    TTF_Font *pixel_like_font = NULL;
 #else
     extern textureObject tile[MAX_NUM_TILES]; // for storing tiles
     extern SDL_Texture *chosen_Highlight; // use to highlight chosen cells
     extern textureObject win_Screen; // use to show when player win game
+    extern textureObject mahjong_Screen; // use to show on menu
     extern textureObject startButton; // use for start game click
+    extern textureObject backButton; // use for back to menu screen
+    extern TTF_Font *pixel_like_font;
 #endif
 
 enum type_Tiles {
