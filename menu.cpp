@@ -11,6 +11,13 @@ cellStatus levelText;
 extern type_Screen currentScreen;
 
 void menuRender(SDL_Renderer *gRenderer) {
+    if(Mix_PlayingMusic() == 0) {
+        Mix_PlayMusic( gMusic, -1 );
+    }
+    else if(Mix_PausedMusic() == 1) {
+        Mix_ResumeMusic();
+    }
+
     for(int i = 0; i * TILE_WIDTH < SCREEN_WIDTH; ++i)
         for(int j = 0; j * TILE_HEIGHT < SCREEN_HEIGHT; ++j)
             if((i & 1) == (j & 1)) {

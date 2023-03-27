@@ -2,6 +2,7 @@
 #define __CONSTANT_H
 #include <string>
 #include <SDL.h>
+#include <SDL_mixer.h>
 #include "tiles.h"
 
 // Screen size
@@ -39,6 +40,8 @@ const int MAHJONG_HEGHT = 540; // Base on Mahjong size
     textureObject startButton; // use for start game click
     textureObject backButton; // use for back to menu screen
     TTF_Font *pixel_like_font = NULL;
+    Mix_Music *gMusic = NULL;
+    Mix_Chunk *winMusic = NULL;
 #else
     extern textureObject tile[MAX_NUM_TILES]; // for storing tiles
     extern SDL_Texture *chosen_Highlight; // use to highlight chosen cells
@@ -47,6 +50,8 @@ const int MAHJONG_HEGHT = 540; // Base on Mahjong size
     extern textureObject startButton; // use for start game click
     extern textureObject backButton; // use for back to menu screen
     extern TTF_Font *pixel_like_font;
+    extern Mix_Music *gMusic;
+    extern Mix_Chunk *winMusic;
 #endif
 
 enum type_Tiles {

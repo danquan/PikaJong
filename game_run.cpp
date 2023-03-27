@@ -24,11 +24,12 @@ SDL_Texture *last_match; // The mahjong tile that player has just match
 SDL_Rect last_match_pos; // Where to display
 
 std::string level;
+bool playedMusic = false;
 
 extern type_Screen currentScreen; // type_Screen
 
 void gameRender(SDL_Renderer *gRenderer) {
-    
+    numRemains = 0;
     if(numRemains == 0) // Player won game
     {     
         // for(int i = 0; i * TILE_WIDTH < SCREEN_WIDTH; ++i)
@@ -37,6 +38,13 @@ void gameRender(SDL_Renderer *gRenderer) {
         //         SDL_Rect tempRect = {i * TILE_WIDTH, j * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
         //         SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &tempRect);
         //     }
+        if(!playedMusic) {
+            Mix_PauseMusic();
+            Mix_PlayChannel(-1, winMusic, 0);
+            //Mix_ResumeMusic();
+            playedMusic = true;
+        }
+
         SDL_Rect dstRect = {(SCREEN_WIDTH - win_Screen.w) / 2, (SCREEN_HEIGHT - win_Screen.h) / 2, win_Screen.w, win_Screen.h};
         SDL_RenderCopy(gRenderer, win_Screen.getTexture(), NULL, &dstRect);
     }

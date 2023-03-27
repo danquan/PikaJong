@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -16,6 +17,8 @@ void run()
     createStartButton();
     createBackButton();
     createLevelChosen(gRenderer);
+
+    Mix_MasterVolume(10);
 
     SDL_Event e;
     bool quit = false;
@@ -79,7 +82,7 @@ void loadFont()
 void loadImage(textureObject &ImageObject, const std::string &links)
 {
     /*load Button*/
-    SDL_Surface *tempImage= IMG_Load(links.c_str());
+    SDL_Surface *tempImage = IMG_Load(links.c_str());
     if (tempImage == NULL)
     {
         printf("Fail to load image %s\n", links.c_str());
@@ -96,6 +99,23 @@ void loadImage(textureObject &ImageObject, const std::string &links)
 
     ImageObject.assignTexture(temp_Image_texture, tempImage->w, tempImage->h);
 }
+void loadChunk(Mix_Chunk *&gChunck, std::string links) {
+    gChunck = Mix_LoadWAV(links.c_str());
+    if( gChunck == NULL )
+    {
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        exit(-1);
+    }
+}
+
+void loadMusic(Mix_Music *&gMusic, std::string links) {
+    gMusic = Mix_LoadMUS(links.c_str());
+    if( gMusic == NULL )
+    {
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        exit(-1);
+    }
+}   
 
 void loadMedia(type_Tiles typeCell)
 {
@@ -106,6 +126,10 @@ void loadMedia(type_Tiles typeCell)
     /*load win Screen*/
     loadImage(win_Screen, "images\\backgrounds\\win.png");
     loadImage(mahjong_Screen, "images\\backgrounds\\mahjong.png");
+
+    /*load music*/
+    loadMusic(gMusic, "musics\\theme_loop.mp3");
+    loadChunk(winMusic, "musics\\win.mp3");
 
     std::string links;
     /*If Type of tile is chosen, then assign links to be the directory; otherwise, choose it by randomizing*/
@@ -186,7 +210,7 @@ void loadMedia(type_Tiles typeCell)
 
 void initProgram()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
         exit(-1);
@@ -221,6 +245,13 @@ void initProgram()
         exit(-1);
     }
 
+    //Initialize SDL_mixer
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        exit(-1);
+    }
+
     // Initialize SDL_ttf
     if (TTF_Init() == -1)
     {
@@ -239,6 +270,7 @@ void closeObject()
     gRenderer = NULL;
 
     // Quit SDL subsystems
+    Mix_Quit();
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
