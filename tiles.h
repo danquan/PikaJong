@@ -44,4 +44,15 @@ struct cellStatus{
     void disAppear();
 };
 
+struct traceSegment {
+    SDL_Point ePoint1, ePoint2; // location of 2 end-points
+    int numCanExist;
+    traceSegment(const SDL_Point &ePoint1, const SDL_Point &ePoint2, const int &numCanExist): 
+        ePoint1(ePoint1), ePoint2(ePoint2), numCanExist(numCanExist) {}; 
+    
+    // If this segment is Existed
+    int Exist();
+    void Draw(SDL_Renderer *gRenderer);
+};
+
 #endif

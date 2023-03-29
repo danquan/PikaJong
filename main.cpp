@@ -18,7 +18,7 @@ void run()
     createBackButton();
     createLevelChosen(gRenderer);
 
-    Mix_MasterVolume(10);
+    Mix_MasterVolume(20);
 
     SDL_Event e;
     bool quit = false;
@@ -98,6 +98,8 @@ void loadImage(textureObject &ImageObject, const std::string &links)
     }
 
     ImageObject.assignTexture(temp_Image_texture, tempImage->w, tempImage->h);
+    SDL_FreeSurface(tempImage);
+    tempImage = NULL;
 }
 void loadChunk(Mix_Chunk *&gChunck, std::string links) {
     gChunck = Mix_LoadWAV(links.c_str());
@@ -160,13 +162,14 @@ void loadMedia(type_Tiles typeCell)
             printf("Fail to create texture from image %s\n", (links + "chosen.png").c_str());
             exit(-1);
         }
+        SDL_FreeSurface(tempChosen);
+        tempChosen = NULL;
     }
 
     /* load all image */
     std::ifstream in("list_tiles.txt"); // list of tiles
     for (int i = 0; i < MAX_NUM_TILES; ++i)
     {
-
         std::string name_tile;
         in >> name_tile;
 

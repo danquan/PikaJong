@@ -25,12 +25,13 @@ const int MAX_NUM_TILES = 33; // Base on number of tiles in list_tiles.txt
 const int BUTTON_WIDTH = 167; // Base on Button START Size
 const int BUTTON_HEIGHT = 68; // Base on Button START Size
 
-const int LEVEL_WIDTH = 120;
-const int LEVEL_HEIGHT = 30;
+const int LEVEL_WIDTH = 120; // size for text level
+const int LEVEL_HEIGHT = 30; // size for text level
 
-const int MAHJONG_WIDTH = 720; // Base on Mahjong size
-const int MAHJONG_HEGHT = 540; // Base on Mahjong size
+const int MAHJONG_WIDTH = 720; // Base on Mahjong.png size
+const int MAHJONG_HEGHT = 540; // Base on Mahjong.png size
 
+const int SEGMENT_COUNT_EXIST = 20; // Number of times line is appear when 2 tiles are matched
 
 #ifdef __MAIN_H
     textureObject tile[MAX_NUM_TILES]; // for storing tiles

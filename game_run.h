@@ -10,7 +10,8 @@ void createBackButton(); // use for back button
 void setCell(int x, int y, textureObject *tile, SDL_Rect dstRect);
 void resetCell(int x, int y);
 
-bool canReach(int x, int y, int z, int t); // Do BFS Searching
+bool canReach(SDL_Point src, SDL_Point dst); // Do BFS Searching
+void Trace(SDL_Point src, SDL_Point dst, int dir, int numchange); // For making segments
 
 /*
 (x, y) -> position where the mouse click on

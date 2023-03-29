@@ -1,4 +1,5 @@
 #include "tiles.h"
+#include "definition.h"
 #include "constant.h"
 
 /*Code for textureObject*/
@@ -44,4 +45,20 @@ void cellStatus::set(textureObject *tile, SDL_Rect dstRect) {
 
 void cellStatus::disAppear() {
     isAppear = false;
+}
+
+/*Segment*/
+int traceSegment::Exist() {
+    return --numCanExist;
+}
+
+void traceSegment::Draw(SDL_Renderer *gRenderer) {
+    if(ePoint1.x == ePoint2.x) { // Vertical line
+        SDL_Rect tempLine = {ePoint1.x - 1, min(ePoint1.y, ePoint2.y), 3, abs(ePoint1.y - ePoint2.y)};
+        SDL_RenderFillRect( gRenderer, &tempLine );
+    }
+    else { // Horizontal
+        SDL_Rect tempLine = {min(ePoint1.x, ePoint2.x), ePoint1.y - 1, abs(ePoint1.x - ePoint2.x), 3};
+        SDL_RenderFillRect( gRenderer, &tempLine );
+    }
 }
