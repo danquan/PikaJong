@@ -12,6 +12,7 @@ SDL_Window *gWindow= NULL; // Main Window
 SDL_Renderer *gRenderer = NULL; // Main gRenderer to Main Window
 
 type_Screen currentScreen = MENU_SCREEN; // type_Screen
+std::string currentLevel = "1";
 
 /*Load chunck*/
 void loadChunk(Mix_Chunk *&gChunck, std::string links);

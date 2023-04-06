@@ -29,6 +29,7 @@ SDL_Texture *last_match; // The mahjong tile that player has just match
 SDL_Rect last_match_pos; // Where to display
 
 std::string level;
+int score;    
 bool playedMusic = false;
 
 extern type_Screen currentScreen; // type_Screen
@@ -253,7 +254,8 @@ bool canReach(SDL_Point src, SDL_Point dst)
 
 void assignLevel(const std::string &lv)
 {
-    level = lv;
+    level = lv; // assign level
+    score = 0; // reset score
     std::ifstream inf(("levels\\" + level + ".txt").c_str());
 
     inf >> numRows >> numCols;

@@ -9,6 +9,7 @@
 cellStatus cellStartButton;
 cellStatus levelText;
 extern type_Screen currentScreen;
+extern std::string currentLevel;
 
 void menuRender(SDL_Renderer *gRenderer) {
     if(Mix_PlayingMusic() == 0) {
@@ -38,6 +39,7 @@ void processMenuMouseDown(int x, int y) {
     
     if( Inside(cellStartButton.dstRect, {x, y}) ) {
         currentScreen = GAME_SCREEN;
+        assignLevel(currentLevel);
         return;
     }
 }

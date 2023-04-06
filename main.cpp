@@ -13,12 +13,12 @@
 
 void run()
 {
-    assignLevel("1");
+    assignLevel(currentLevel);
     createStartButton();
     createBackButton();
     createLevelChosen(gRenderer);
 
-    Mix_MasterVolume(20);
+    Mix_MasterVolume(60);
 
     SDL_Event e;
     bool quit = false;
