@@ -11,12 +11,13 @@
 #include "game_run.h"
 #include "menu.h"
 
+/// @brief run main process
 void run()
 {
-    assignLevel(currentLevel);
     createStartButton();
     createBackButton();
-    createLevelChosen(gRenderer);
+    createWinScreen();
+    createMahjongScreen();
 
     Mix_MasterVolume(60);
 
@@ -79,7 +80,11 @@ void loadFont()
     }
 }
 
-void loadImage(textureObject &ImageObject, const std::string &links)
+/// @brief For loading Images from file to texture
+/// @param ImageObject texture to save image
+/// @param links where image locate
+/// @param alpha if alpha mode is enabled, alpha is the alphamod; otherwise, alpha = -1
+void loadImage(textureObject &ImageObject, const std::string &links, int alpha = -1)
 {
     /*load Button*/
     SDL_Surface *tempImage = IMG_Load(links.c_str());
@@ -89,18 +94,23 @@ void loadImage(textureObject &ImageObject, const std::string &links)
         exit(-1);
     }
 
-    SDL_Texture *temp_Image_texture = SDL_CreateTextureFromSurface(gRenderer, tempImage);
-
-    if (temp_Image_texture == NULL)
+    ImageObject = SDL_CreateTextureFromSurface(gRenderer, tempImage);
+    if (ImageObject == NULL)
     {
         printf("Fail to create texture from image %s\n", links.c_str());
         exit(-1);
     }
 
-    ImageObject.assignTexture(temp_Image_texture, tempImage->w, tempImage->h);
+    // Set alpha mod
+    if(alpha != -1) {
+        SDL_SetTextureBlendMode(ImageObject, SDL_BLENDMODE_BLEND);
+        SDL_SetTextureAlphaMod(ImageObject, alpha);
+    }
+
     SDL_FreeSurface(tempImage);
     tempImage = NULL;
 }
+
 void loadChunk(Mix_Chunk *&gChunck, std::string links) {
     gChunck = Mix_LoadWAV(links.c_str());
     if( gChunck == NULL )
@@ -122,90 +132,33 @@ void loadMusic(Mix_Music *&gMusic, std::string links) {
 void loadMedia(type_Tiles typeCell)
 {
     /*Load Button*/
-    loadImage(startButton, "images\\buttons\\start_Button.png");
-    loadImage(backButton, "images\\buttons\\back_Button.png");
+    loadImage(textures[START_BUTTON], "images\\buttons\\start_Button.png", -1);
+    loadImage(textures[BACK_BUTTON], "images\\buttons\\back_Button.png", -1);
 
     /*load win Screen*/
-    loadImage(win_Screen, "images\\backgrounds\\win.png");
-    loadImage(mahjong_Screen, "images\\backgrounds\\mahjong.png");
+    loadImage(textures[WIN_SCREEN], "images\\backgrounds\\win.png", -1);
+    loadImage(textures[MAHJONG_MENU], "images\\backgrounds\\mahjong.png", -1);
 
     /*load music*/
     loadMusic(gMusic, "musics\\theme_loop.mp3");
     loadChunk(winMusic, "musics\\win.mp3");
 
-    std::string links;
-    /*If Type of tile is chosen, then assign links to be the directory; otherwise, choose it by randomizing*/
-    {
-        if (typeCell == BLACK_TILE)
-            links = "images\\tiles\\Black\\";
-        else if (typeCell == REGULAR_TILE)
-            links = "images\\tiles\\Regular\\";
-        else
-            links = (rand(1, 1000) & 1) ? "images\\tiles\\Black\\" : "images\\tiles\\Regular\\";
-    }
+    std::string links = "images\\tiles\\";
 
     /*load highlight*/
-    {
-        SDL_Surface *tempChosen = IMG_Load((links + "chosen.png").c_str());
-        if (tempChosen == NULL)
-        {
-            printf("Fail to load image %s\n", (links + "chosen.png").c_str());
-            exit(-1);
-        }
+    loadImage(textures[HIGH_LIGHT], links + "chosen.png", 125);
 
-        chosen_Highlight = SDL_CreateTextureFromSurface(gRenderer, tempChosen);
-        SDL_SetTextureBlendMode(chosen_Highlight, SDL_BLENDMODE_BLEND);
-        SDL_SetTextureAlphaMod(chosen_Highlight, 125);
-
-        if (chosen_Highlight == NULL)
-        {
-            printf("Fail to create texture from image %s\n", (links + "chosen.png").c_str());
-            exit(-1);
-        }
-        SDL_FreeSurface(tempChosen);
-        tempChosen = NULL;
-    }
+    /*load backgound tile, aka front tile*/
+    loadImage(textures[TILE_FRONT], links + "Front.png", -1);
 
     /* load all image */
     std::ifstream in("list_tiles.txt"); // list of tiles
-    for (int i = 0; i < MAX_NUM_TILES; ++i)
+    for (int i = 0; i < NUM_TILES; ++i)
     {
         std::string name_tile;
         in >> name_tile;
 
-        /*Load tile content*/
-        SDL_Surface *tempTile = IMG_Load((links + name_tile).c_str());
-        if (tempTile == NULL)
-        {
-            printf("Fail to load image %s\n", (links + name_tile).c_str());
-            exit(-1);
-        }
-
-        /*Load tile background*/
-        SDL_Surface *tempBackground = IMG_Load((links + "Front.png").c_str());
-        if (tempBackground == NULL)
-        {
-            printf("Fail to load background %s\n", (links + "Front.png").c_str());
-            exit(-1);
-        }
-
-        /*"Print" content on background*/
-        SDL_Rect dstRect = {(tempBackground->w - 480) / 2, (tempBackground->h - 640) / 2, 480, 640};
-        SDL_BlitScaled(tempTile, NULL, tempBackground, &dstRect);
-
-        /*Create texture to render*/
-        SDL_Texture *tempTexture = SDL_CreateTextureFromSurface(gRenderer, tempBackground);
-        if (tempTexture == NULL)
-        {
-            printf("Fail to create texture from image %s\n", (links + name_tile).c_str());
-            exit(-1);
-        }
-        /*Assign texture here*/
-        tile[i].assignTexture(tempTexture, tempBackground->w, tempBackground->h);
-
-        // Free memory
-        SDL_FreeSurface(tempTile);
-        SDL_FreeSurface(tempBackground);
+        loadImage(textures[i], links + name_tile, -1);
     }
 
     in.close();

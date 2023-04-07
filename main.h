@@ -5,7 +5,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#include "tiles.h"
+#include "textures.h"
 #include "constant.h"
 
 SDL_Window *gWindow= NULL; // Main Window

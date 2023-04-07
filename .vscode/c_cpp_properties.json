@@ -6,7 +6,8 @@
                 "${default}",
                 "C:\\Program Files\\CodeBlocks\\MinGW\\x86_64-w64-mingw32-SDL\\bin",
                 "C:\\Program Files\\CodeBlocks\\MinGW\\bin",
-                "C:\\Program Files\\CodeBlocks\\MinGW\\x86_64-w64-mingw32-SDL\\include\\SDL2"
+                "C:\\Program Files\\CodeBlocks\\MinGW\\x86_64-w64-mingw32-SDL\\include\\SDL2",
+                "${workspaceFolder}/x86_64-w64-mingw32-SDL/include/SDL2"
             ],
             "defines": [
                 "_DEBUG",

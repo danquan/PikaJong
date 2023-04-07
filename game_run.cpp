@@ -8,7 +8,7 @@
 #include "constant.h"
 #include "definition.h"
 #include "game_run.h"
-#include "tiles.h"
+#include "textures.h"
 
 const int dx[2][2] = {{0, 0}, {-1, 1}},       // Use for
     dy[2][2] = {{-1, 1}, {0, 0}};             // BFS Search
@@ -17,20 +17,19 @@ int par[MAX_ROWS + 2][MAX_COLUMNS + 2][2][3]; // for BFS Search and trace
 // row * 2^24 + cols * 2 ^ 16 + dir * 2^3 + number_of_change * 2^0
 
 int numCols, numRows, numRemains;
-SDL_Rect table;
+SDL_Rect table; // where to show tiles
 cellStatus cell[MAX_ROWS][MAX_COLUMNS]; // status of cells in table
-cellStatus cellBackButton;
+bool isDisappear[MAX_ROWS][MAX_COLUMNS]; // use if tile has been deleted
+bool isChosen[MAX_ROWS][MAX_COLUMNS]; // use if tle has been chosen
+
+cellStatus cellBackButton, winScreen;
 std::vector<traceSegment> segments;
 
 int numChosen;
 SDL_Point posChosen[2];
 
-SDL_Texture *last_match; // The mahjong tile that player has just match
-SDL_Rect last_match_pos; // Where to display
-
 std::string level;
-int score;    
-bool playedMusic = false;
+int score;
 
 extern type_Screen currentScreen; // type_Screen
 
@@ -38,42 +37,41 @@ void gameRender(SDL_Renderer *gRenderer)
 {
     if (numRemains == 0) // Player won game
     {
-        // for(int i = 0; i * TILE_WIDTH < SCREEN_WIDTH; ++i)
-        // for(int j = 0; j * TILE_HEIGHT < SCREEN_HEIGHT; ++j)
-        //     if((i & 1) == (j & 1)) {
-        //         SDL_Rect tempRect = {i * TILE_WIDTH, j * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT};
-        //         SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &tempRect);
-        //     }
-        if (!playedMusic)
+        //Play win music
         {
             Mix_PauseMusic();
             Mix_PlayChannel(-1, winMusic, 0);
-            // Mix_ResumeMusic();
-            playedMusic = true;
         }
 
-        SDL_Rect dstRect = {(SCREEN_WIDTH - win_Screen.w) / 2, (SCREEN_HEIGHT - win_Screen.h) / 2, win_Screen.w, win_Screen.h};
-        SDL_RenderCopy(gRenderer, win_Screen.getTexture(), NULL, &dstRect);
+        winScreen.Render(gRenderer);
     }
     else
     {
-        SDL_RenderCopy(gRenderer, cellBackButton.getTexture(), NULL, &cellBackButton.dstRect); // for back button
-        SDL_RenderCopy(gRenderer, last_match, NULL, &last_match_pos);
+        // Render Button
+        cellBackButton.Render(gRenderer);
 
+        //Render Cell
         for (int i = 0; i < numRows; ++i)
-            for (int j = 0; j < numCols; ++j)
-                if (!cell[i][j].empty())
-                {
+            for (int j = 0; j < numCols; ++j) {
+                if(!isDisappear[i][j]) {
 
-                    assert(cell[i][j].tile != NULL);
-                    SDL_RenderCopy(gRenderer, cell[i][j].getTexture(), NULL, &cell[i][j].dstRect);
+                    SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, &cell[i][j].dstRect); // Render background tile
+                    
+                    SDL_Rect tempDstRect = cell[i][j].dstRect;
+                    tempDstRect.x += 2;
+                    tempDstRect.y += 2;
+                    tempDstRect.w -= 4;
+                    tempDstRect.h -= 4;
+                    SDL_RenderCopy(gRenderer, cell[i][j].texture, NULL, &tempDstRect);
 
-                    if (cell[i][j].getCheckChosen())
-                        SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &cell[i][j].dstRect);
+                    if(isChosen[i][j])
+                        SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, &cell[i][j].dstRect);
                 }
-                else
-                    SDL_RenderCopy(gRenderer, chosen_Highlight, NULL, &cell[i][j].dstRect);
+                else 
+                    SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, &cell[i][j].dstRect);
+            }
         
+        //Render Trace Segment
         SDL_SetRenderDrawColor(gRenderer, 0, 204, 0, 200);
         for(int i = (int)segments.size() - 1; ~i; --i) // Draw segments
         {
@@ -88,36 +86,45 @@ void gameRender(SDL_Renderer *gRenderer)
     }
 }
 
+// the area that show tiles
+void createTable() {
+    table = {(SCREEN_WIDTH * 8 / 9 - numCols * CELL_WIDTH) / 2 + SCREEN_WIDTH / 9, (SCREEN_HEIGHT - numRows * CELL_HEIGHT) / 2, // position
+             numCols * CELL_WIDTH, numRows * CELL_HEIGHT}; // size
+}
+
 void createBackButton()
 {
-    table = {(SCREEN_WIDTH - 20 * CELL_WIDTH) / 2, (SCREEN_HEIGHT - 11 * CELL_HEIGHT) / 2, 20 * CELL_WIDTH, 11 * CELL_HEIGHT};
+    int backButton_Width = 113;
+    int backButton_Height = 68;
+    SDL_Rect dstRect = {(SCREEN_WIDTH / 9 - backButton_Width) / 2, (SCREEN_HEIGHT - backButton_Height) / 2 , backButton_Width, backButton_Height};
+    setCell(cellBackButton, textures[BACK_BUTTON], dstRect);
+}
 
-    SDL_Rect dstRect = {(table.x - BUTTON_WIDTH * 80 / 100) / 2, (table.y + CELL_HEIGHT - BUTTON_HEIGHT * 80 / 100) / 2, BUTTON_WIDTH * 80 / 100, BUTTON_HEIGHT * 80 / 100};
-    cellBackButton.set(&backButton, dstRect);
+void createWinScreen() 
+{
+    SDL_Rect dstRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    setCell(winScreen, textures[WIN_SCREEN], dstRect);
 }
 
 void processGameMouseDown(int x, int y)
 {
-    if (Inside(cellBackButton.dstRect, {x, y}))
+    if (Inside(cellBackButton.dstRect, {x, y})) // Check if player go back to menu
     {
         currentScreen = MENU_SCREEN;
         return;
     }
 
+    // Otherwise, find the cell that player click
     for (int i = 0; i < numRows; ++i)
         for (int j = 0; j < numCols; ++j)
-            if (cell[i][j].canClick() && Inside(cell[i][j].dstRect, {x, y}))
+            if (!isDisappear[i][j] && Inside(cell[i][j].dstRect, {x, y}))
             {
+                isChosen[i][j] = !isChosen[i][j];
 
-                if (cell[i][j].click())
-                {
+                if (isChosen[i][j])
                     posChosen[numChosen++] = {i, j};
-                }
                 else
-                {
-                    assert(numChosen == 1);
                     --numChosen;
-                }
 
                 goto done;
             }
@@ -125,14 +132,12 @@ done:;
 
     if (numChosen == 2)
     {
-        if (cell[posChosen[0].x][posChosen[0].y].tile == cell[posChosen[1].x][posChosen[1].y].tile && canReach(posChosen[0], posChosen[1]))
+        if (cell[posChosen[0].x][posChosen[0].y].texture == cell[posChosen[1].x][posChosen[1].y].texture && canReach(posChosen[0], posChosen[1]))
         {
-            cell[posChosen[0].x][posChosen[0].y].disAppear();
-            cell[posChosen[1].x][posChosen[1].y].disAppear();
+            isDisappear[posChosen[0].x][posChosen[0].y] = true;
+            isDisappear[posChosen[1].x][posChosen[1].y] = true;
 
             numRemains -= 2;
-            last_match = cell[posChosen[0].x][posChosen[0].y].getTexture();
-
             //Trace for draw segments
 
             for(int dir = 0; dir < 2; ++dir)
@@ -145,8 +150,8 @@ done:;
             done_trace:;
         }
 
-        cell[posChosen[0].x][posChosen[0].y].click();
-        cell[posChosen[1].x][posChosen[1].y].click();
+        isChosen[posChosen[0].x][posChosen[0].y] = false;
+        isChosen[posChosen[1].x][posChosen[1].y] = false;
         numChosen = 0;
     }
 }
@@ -187,6 +192,8 @@ void Trace(SDL_Point src, SDL_Point dst, int dir, int num_change) {
     }
 }
 
+//use BFS to find valid path between 2 cell
+// idea: par[x][y][z][]
 bool canReach(SDL_Point src, SDL_Point dst)
 {
     memset(par, -1, sizeof par);
@@ -221,7 +228,7 @@ bool canReach(SDL_Point src, SDL_Point dst)
                 int u = c.x + dx[c.dir][i],
                     v = c.y + dy[c.dir][i];
 
-                if (u >= 0 && u <= numRows + 1 && v >= 0 && v <= numCols + 1 && (u == 0 || u == numRows + 1 || v == 0 || v == numCols + 1 || !cell[u - 1][v - 1].isAppear || (u == dst.x && v == dst.y)))
+                if (u >= 0 && u <= numRows + 1 && v >= 0 && v <= numCols + 1 && (u == 0 || u == numRows + 1 || v == 0 || v == numCols + 1 || isDisappear[u - 1][v - 1] || (u == dst.x && v == dst.y)))
                 {
                     if (par[u][v][c.dir][c.num_change] == -1)
                     {
@@ -237,7 +244,7 @@ bool canReach(SDL_Point src, SDL_Point dst)
                 int u = c.x + dx[c.dir ^ 1][i],
                     v = c.y + dy[c.dir ^ 1][i];
 
-                if (u >= 0 && u <= numRows + 1 && v >= 0 && v <= numCols + 1 && (u == 0 || u == numRows + 1 || v == 0 || v == numCols + 1 || !cell[u - 1][v - 1].isAppear || (u == dst.x && v == dst.y)))
+                if (u >= 0 && u <= numRows + 1 && v >= 0 && v <= numCols + 1 && (u == 0 || u == numRows + 1 || v == 0 || v == numCols + 1 || isDisappear[u - 1][v - 1] || (u == dst.x && v == dst.y)))
                 {
                     if (par[u][v][c.dir ^ 1][c.num_change + 1] == -1)
                     {
@@ -252,46 +259,43 @@ bool canReach(SDL_Point src, SDL_Point dst)
     return false; // can't reach
 }
 
+// reset for new game
+void resetGame() {
+    score = 0; // reset score
+    numChosen = 0; // no chosen in new game
+    segments.clear();
+}
+
 void assignLevel(const std::string &lv)
 {
     level = lv; // assign level
-    score = 0; // reset score
+    resetGame();
+
     std::ifstream inf(("levels\\" + level + ".txt").c_str());
-
+    
     inf >> numRows >> numCols;
-
-    table = {(SCREEN_WIDTH - 20 * CELL_WIDTH) / 2, (SCREEN_HEIGHT - 11 * CELL_HEIGHT) / 2, 20 * CELL_WIDTH, 11 * CELL_HEIGHT};
-
-    last_match = chosen_Highlight;
-    last_match_pos = {(table.x - TILE_WIDTH) / 2, (table.y + table.h - TILE_HEIGHT) / 2, TILE_WIDTH, TILE_HEIGHT};
-
     numRemains = numRows * numCols;
+    createTable();
+
     std::vector<int> id(numRows * numCols / 2);
-    for (auto &i : id)
-        i = rand(0, MAX_NUM_TILES - 1);
+    for (auto &i : id) i = rand(0, NUM_TILES - 1);
 
     for (int i = 0; i < numRows; ++i)
         for (int j = 0; j < numCols; ++j)
         {
-            int x;
-            inf >> x;
+            int x; inf >> x;
 
             SDL_Rect dstRect = {j * CELL_WIDTH + table.x, i * CELL_HEIGHT + table.y, TILE_WIDTH, TILE_HEIGHT};
-            setCell(i, j, &tile[id[x]], dstRect);
+            setCell(cell[i][j], textures[id[x]], dstRect);
+            isDisappear[i][j] = isChosen[i][j] = false;
         }
 
     id.clear();
     id.shrink_to_fit();
-    numChosen = 0; // For new game
     inf.close();
 }
 
-void resetCell(int x, int y)
+void setCell(cellStatus &cell, textureObject tile, SDL_Rect dstRect)
 {
-    cell[x][y].reset();
-}
-
-void setCell(int x, int y, textureObject *tile, SDL_Rect dstRect)
-{
-    cell[x][y].set(tile, dstRect);
+    cell.set(tile, dstRect);
 }

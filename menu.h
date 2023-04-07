@@ -6,6 +6,6 @@
 void menuRender(SDL_Renderer *gRenderer);
 void processMenuMouseDown(int x, int y);
 void createStartButton();
-void createLevelChosen(SDL_Renderer *gRenderer);
+void createMahjongScreen();
 
 #endif
