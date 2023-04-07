@@ -1,5 +1,7 @@
 # Game Pika Chược, develope by Nguyen Dang Quan (aka Lam lai cuoc doi)
 
+<h1>Luật chơi</h1>
+
 Có thể tùy biến levels; cụ thể, để tạo level mới bạn cần:
 - Thêm một file txt có dạng <ten_level>.txt vào thư mục levels
 - Thay đổi tên của level thành <ten_level> trong khi gọi đến hàm assignLevel() trong file main.cpp
