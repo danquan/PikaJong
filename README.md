@@ -1,12 +1,14 @@
 # Game Pika Chược, develope by Nguyen Dang Quan (aka Lam lai cuoc doi)
 
 <h1>Luật chơi</h1>
+
 Tại mỗi thời điểm, người chơi cần chọn ra 2 ô sao cho:
 - Hình ghi trên hai ô này là giống nhau
 - Tồn tại các đoạn thẳng tạo thành không quá 3 đường gấp khúc nối giữa hai ô
 Khi đó, hai ô ấy sẽ biến mất
 
 <h1> Thêm Level </h1>
+
 Có thể tùy biến levels; cụ thể, để tạo level mới bạn cần:
 - Thêm một file txt có dạng <ten_level>.txt vào thư mục levels
 - Thay đổi giá trị của currentLevel (Trong file main.h) thành <ten_level>
