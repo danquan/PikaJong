@@ -37,14 +37,14 @@ const int SEGMENT_COUNT_EXIST = 20; // Number of times line is appear when 2 til
 
 #ifdef __MAIN_H
     textureObject textures[MAX_NUM_TEXTURES]; // for storing textures
-    TTF_Font *pixel_like_font = NULL;
     Mix_Music *gMusic = NULL;
     Mix_Chunk *winMusic = NULL;
+    Mix_Chunk *introMusic = NULL;
 #else
     extern textureObject textures[MAX_NUM_TEXTURES];// for storing textures
-    extern TTF_Font *pixel_like_font;
     extern Mix_Music *gMusic;
     extern Mix_Chunk *winMusic;
+    extern Mix_Chunk *introMusic;
 #endif
 
 enum type_Tiles {

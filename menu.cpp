@@ -37,6 +37,12 @@ void processMenuMouseDown(int x, int y) {
     
     if( Inside(cellStartButton.dstRect, {x, y}) ) {
         currentScreen = GAME_SCREEN;
+
+        if(Mix_PlayingMusic() != 0) 
+        {
+            Mix_HaltMusic();
+        }
+
         assignLevel(currentLevel);
         return;
     }

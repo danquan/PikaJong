@@ -23,9 +23,6 @@ void loadMusic(Mix_Music *&gMusic, std::string links);
 /*Load Image*/
 void loadImage(textureObject &ImageObject, const std::string &links);
 
-/*Load fonts*/
-void loadFont();
-
 /*Load tiles, background,...*/
 void loadMedia(type_Tiles typeCell = RANDOM_TYPE);
 

@@ -10,7 +10,7 @@ void createWinScreen();
 
 void setCell(cellStatus &cell, textureObject tile, SDL_Rect dstRect);
 
-bool canReach(SDL_Point src, SDL_Point dst); // Do BFS Searching
+void doSearch(SDL_Point src, SDL_Point dst); // Do BFS Searching
 void Trace(SDL_Point src, SDL_Point dst, int dir, int numchange); // For making segments
 
 /*

@@ -64,20 +64,8 @@ int main(int argc, char *argv[])
 {
     initProgram();
     loadMedia();
-    loadFont();
     run();
     closeObject();
-}
-
-void loadFont()
-{
-    pixel_like_font = TTF_OpenFont("fonts\\pixel-like-font.ttf", 32);
-
-    if (pixel_like_font == NULL)
-    {
-        printf("Font pixel-like-font is not valid"); // print to debug;
-        exit(-1);
-    }
 }
 
 /// @brief For loading Images from file to texture
@@ -142,6 +130,7 @@ void loadMedia(type_Tiles typeCell)
     /*load music*/
     loadMusic(gMusic, "musics\\theme_loop.mp3");
     loadChunk(winMusic, "musics\\win.mp3");
+    loadChunk(introMusic, "musics\\intro_sound.mp3");
 
     std::string links = "images\\tiles\\";
 

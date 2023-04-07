@@ -124,8 +124,12 @@ int32_t main()
                 }
         }
 
+        vector<int> tempCell;
+        for(int i = 0; i < m * n / 2; ++i)
+            tempCell.emplace_back(rand(0, 32));
+
         for(int i = 0; i < m; ++i)
             for(int j = 0; j < n; ++j)
-                cout << a[i][j] - 1 << (j == n - 1 ? "\n" : " ");
+                cout << tempCell[a[i][j] - 1] << (j == n - 1 ? "\n" : " ");
     }
 }
