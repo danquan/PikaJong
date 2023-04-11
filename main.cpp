@@ -128,7 +128,8 @@ void loadMedia(type_Tiles typeCell)
     loadImage(textures[MAHJONG_MENU], "images\\backgrounds\\mahjong.png", -1);
 
     /*load music*/
-    loadMusic(gMusic, "musics\\theme_loop.mp3");
+    loadMusic(gMusic, "musics\\game_loop.mp3");
+    loadMusic(gTheme, "musics\\theme_song.mp3");
     loadChunk(winMusic, "musics\\win.mp3");
     loadChunk(introMusic, "musics\\intro_sound.mp3");
 

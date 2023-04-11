@@ -40,7 +40,7 @@ void gameRender(SDL_Renderer *gRenderer)
     {
         // Play win music
         if(Mix_PlayingMusic() != 0){
-            Mix_PauseMusic();
+            Mix_HaltMusic();
             Mix_PlayChannel(-1, winMusic, 0);
         }
 

@@ -14,7 +14,7 @@ extern std::string currentLevel;
 
 void menuRender(SDL_Renderer *gRenderer) {
     if(Mix_PlayingMusic() == 0) {
-        Mix_PlayMusic( gMusic, -1 );
+        Mix_PlayMusic( gTheme, -1 );
     }
     else if(Mix_PausedMusic() == 1) {
         Mix_ResumeMusic();
