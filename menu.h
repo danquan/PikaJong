@@ -3,9 +3,9 @@
 
 #include <SDL.h>
 
-void menuRender(SDL_Renderer *gRenderer);
+void menuRender();
 void processMenuMouseDown(int x, int y);
-void createStartButton();
-void createMahjongScreen();
+void processMenuMouseOver(int x, int y);
+void createMenu(); // call for all to prepare menu
 
 #endif

@@ -18,53 +18,86 @@ int par[MAX_ROWS + 2][MAX_COLUMNS + 2][2][3]; // for BFS Search and trace
 // row * 2^24 + cols * 2 ^ 16 + dir * 2^3 + number_of_change * 2^0
 
 int numCols, numRows, numRemains;
-SDL_Rect table;                          // where to show tiles
+SDL_Rect table,                          // where to show tiles
+    infoTable;                           // where to show informations
 cellStatus cell[MAX_ROWS][MAX_COLUMNS];  // status of cells in table
 bool isDisappear[MAX_ROWS][MAX_COLUMNS]; // use if tile has been deleted
 bool isChosen[MAX_ROWS][MAX_COLUMNS];    // use if tle has been chosen
 
-cellStatus cellBackButton, winScreen;
-std::vector<traceSegment> segments;
-
 int numChosen;
 SDL_Point posChosen[2];
+
+cellStatus cellBackButton, winScreen;
+std::vector<traceSegment> segments;      // use to show trace when 2 tiles are disappeared
+
+extern bool canContinue; // if player can continue the remaining game
 
 std::string level;
 int score;
 
 extern type_Screen currentScreen; // type_Screen
 
-void gameRender(SDL_Renderer *gRenderer)
+void gameRender()
 {
     if (numRemains == 0) // Player won game
     {
         // Play win music
-        if(Mix_PlayingMusic() != 0){
+        if (Mix_PlayingMusic() != 0)
+        {
             Mix_HaltMusic();
-            Mix_PlayChannel(-1, winMusic, 0);
+            Mix_PlayChannel(-1, chunks[WIN_CHUNK], 0);
         }
 
         winScreen.Render(gRenderer);
     }
     else
     {
-        //Play Music
-        if(Mix_PlayingMusic() == 0) 
+        // Play Music
+        if (Mix_PlayingMusic() == 0)
         {
-            Mix_PlayChannel(-1, introMusic, 0);
-            Mix_PlayMusic(gMusic, -1);
+            Mix_PlayChannel(-1, chunks[START_CHUNK], 0);
+            Mix_PlayMusic(musics[GAME_LOOP_MUSIC], -1);
         }
 
         // Render Button
         cellBackButton.Render(gRenderer);
 
-        //RenderScore
-        SDL_Rect tempDstRect = {(SCREEN_WIDTH / 9 - 115) / 2, (SCREEN_HEIGHT / 2 - 40) / 2, 115, 40};
-        Render_Text(gRenderer, "SCORES: " + int_to_string(score), "fonts\\pixel-like-font.ttf", 20, tempDstRect, {0, 0, 0});
-        tempDstRect.y += 60;
-        Render_Text(gRenderer, "REMAINING", "fonts\\pixel-like-font.ttf", 20, tempDstRect, {0, 0, 0});
-        tempDstRect.y += 30;
-        Render_Text(gRenderer, "TILES: " + int_to_string(numRemains), "fonts\\pixel-like-font.ttf", 20, tempDstRect, {0, 0, 0});
+        // render Infotable
+        draw_rect_with_alpha(gRenderer, infoTable, 0xff, 0xff, 0xff, 128);
+
+        /*--- RenderScore ---*/
+        SDL_Rect tempDstRect = {0, infoTable.y + 15, 0, 0};
+        SDL_Texture *tempTexture = text_to_texture(gRenderer, "SCORES", "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        Render_Texture(gRenderer, // renderer
+                        tempTexture, // text
+                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+
+        tempDstRect.y += tempDstRect.h;
+
+
+        tempTexture = text_to_texture(gRenderer, int_to_string(score), "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        Render_Texture(gRenderer, // renderer
+                        tempTexture, // text
+                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+        tempDstRect.y += tempDstRect.h + 20;
+
+        // Render Remaining Tiles
+        tempTexture = text_to_texture(gRenderer, "REMAINING", "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        Render_Texture(gRenderer, // renderer
+                        tempTexture, // text
+                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+        tempDstRect.y += tempDstRect.h;
+
+        tempTexture = text_to_texture(gRenderer, "TILES", "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        Render_Texture(gRenderer, // renderer
+                        tempTexture, // text
+                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+        tempDstRect.y += tempDstRect.h;
+
+        tempTexture = text_to_texture(gRenderer, int_to_string(numRemains), "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        Render_Texture(gRenderer, // renderer
+                        tempTexture, // text
+                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
 
         // Render Cell
         for (int i = 0; i < numRows; ++i)
@@ -72,21 +105,20 @@ void gameRender(SDL_Renderer *gRenderer)
             {
                 if (!isDisappear[i][j])
                 {
+                    SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, cell[i][j].getRect()); // Render background tile
 
-                    SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, &cell[i][j].dstRect); // Render background tile
-
-                    tempDstRect = cell[i][j].dstRect;
-                    tempDstRect.x += 2;
-                    tempDstRect.y += 2;
-                    tempDstRect.w -= 4;
-                    tempDstRect.h -= 4;
-                    SDL_RenderCopy(gRenderer, cell[i][j].texture, NULL, &tempDstRect);
+                    tempDstRect = *cell[i][j].getRect();
+                    tempDstRect.x += 2; // minimize tile
+                    tempDstRect.y += 2; // minimize tile
+                    tempDstRect.w -= 4; // minimize tile
+                    tempDstRect.h -= 4; // minimize tile
+                    SDL_RenderCopy(gRenderer, cell[i][j].getTexture(), NULL, &tempDstRect);
 
                     if (isChosen[i][j])
-                        SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, &cell[i][j].dstRect);
+                        SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, cell[i][j].getRect());
                 }
                 else
-                    SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, &cell[i][j].dstRect);
+                    SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, cell[i][j].getRect());
             }
 
         // Render Trace Segment
@@ -104,25 +136,36 @@ void gameRender(SDL_Renderer *gRenderer)
     }
 }
 
-// the area that show tiles
-void createTable()
-{
-    table = {(SCREEN_WIDTH * 8 / 9 - numCols * CELL_WIDTH) / 2 + SCREEN_WIDTH / 9, (SCREEN_HEIGHT - numRows * CELL_HEIGHT) / 2, // position
-             numCols * CELL_WIDTH, numRows * CELL_HEIGHT};                                                                      // size
-}
-
 void createBackButton()
 {
     int backButton_Width = 113;
     int backButton_Height = 68;
-    SDL_Rect dstRect = {(SCREEN_WIDTH / 9 - backButton_Width) / 2, (SCREEN_HEIGHT - backButton_Height) / 2, backButton_Width, backButton_Height};
-    setCell(cellBackButton, textures[BACK_BUTTON], dstRect);
+    SDL_Rect dstRect = {(SCREEN_WIDTH / 9 - backButton_Width) / 2, (SCREEN_HEIGHT / 9 - backButton_Height) / 2, backButton_Width, backButton_Height};
+    cellBackButton.set(textures[BACK_BUTTON], dstRect);
 }
 
 void createWinScreen()
 {
     SDL_Rect dstRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-    setCell(winScreen, textures[WIN_SCREEN], dstRect);
+    winScreen.set(textures[WIN_SCREEN], dstRect);
+}
+
+void createGameScreen()
+{
+    createBackButton();
+    createWinScreen();
+}
+
+void processGameMouseOver(int x, int y)
+{
+    if (Inside(*cellBackButton.getRect(), {x, y}))
+    {
+        cellBackButton.set(textures[BACK_BUTTON_MOUSEOVER], *cellBackButton.getRect());
+    }
+    else
+    {
+        cellBackButton.set(textures[BACK_BUTTON], *cellBackButton.getRect());
+    }
 }
 
 void updateScore(int coef)
@@ -134,11 +177,12 @@ void updateScore(int coef)
 
 void processGameMouseDown(int x, int y)
 {
-    if (Inside(cellBackButton.dstRect, {x, y})) // Check if player go back to menu
+    if (Inside(*cellBackButton.getRect(), {x, y})) // Check if player go back to menu
     {
         currentScreen = MENU_SCREEN;
-        
-        if(Mix_PlayingMusic() != 0) 
+        canContinue = true;
+
+        if (Mix_PlayingMusic() != 0)
         {
             Mix_HaltMusic();
         }
@@ -149,7 +193,7 @@ void processGameMouseDown(int x, int y)
     // Otherwise, find the cell that player click
     for (int i = 0; i < numRows; ++i)
         for (int j = 0; j < numCols; ++j)
-            if (!isDisappear[i][j] && Inside(cell[i][j].dstRect, {x, y}))
+            if (!isDisappear[i][j] && Inside(*cell[i][j].getRect(), {x, y}))
             {
                 isChosen[i][j] = !isChosen[i][j];
 
@@ -164,7 +208,7 @@ done_click:;
 
     if (numChosen == 2)
     {
-        if (cell[posChosen[0].x][posChosen[0].y].texture == cell[posChosen[1].x][posChosen[1].y].texture)
+        if (cell[posChosen[0].x][posChosen[0].y].getTexture() == cell[posChosen[1].x][posChosen[1].y].getTexture())
         {
             doSearch(posChosen[0], posChosen[1]);
 
@@ -193,7 +237,7 @@ done_click:;
 SDL_Point getCenter(SDL_Point coordinate)
 {
     if (Inside(table, coordinate))
-        return Center(cell[coordinate.x - 1][coordinate.y - 1].dstRect);
+        return Center(*cell[coordinate.x - 1][coordinate.y - 1].getRect());
 
     SDL_Rect dst;
     dst.x = coordinate.y < 1 ? table.x - CELL_WIDTH : (coordinate.y > numCols ? table.x + table.w : (coordinate.y - 1) * CELL_WIDTH + table.x);
@@ -283,6 +327,18 @@ void resetGame()
     segments.clear();
 }
 
+// the area that show tiles
+void createTable()
+{
+    table = {(SCREEN_WIDTH * 8 / 9 - numCols * CELL_WIDTH) / 2 + SCREEN_WIDTH / 9, (SCREEN_HEIGHT - numRows * CELL_HEIGHT) / 2, // position
+             numCols * CELL_WIDTH, numRows * CELL_HEIGHT};                                                                      // size
+}
+
+// the area that show informations
+void createInfoTable() {
+    infoTable = {(table.x - 190) / 2, (SCREEN_HEIGHT - 300) / 2, 190, 300};
+}
+
 void assignLevel(const std::string &lv)
 {
     level = lv; // assign level
@@ -293,6 +349,7 @@ void assignLevel(const std::string &lv)
     inf >> numRows >> numCols;
     numRemains = numRows * numCols;
     createTable();
+    createInfoTable();
 
     for (int i = 0; i < numRows; ++i)
         for (int j = 0; j < numCols; ++j)
@@ -301,14 +358,9 @@ void assignLevel(const std::string &lv)
             inf >> x;
 
             SDL_Rect dstRect = {j * CELL_WIDTH + table.x, i * CELL_HEIGHT + table.y, TILE_WIDTH, TILE_HEIGHT}; // TILE Size is not same as CELL Size
-            setCell(cell[i][j], textures[x], dstRect);
+            cell[i][j].set(textures[x], dstRect);
             isDisappear[i][j] = isChosen[i][j] = false;
         }
 
     inf.close();
-}
-
-void setCell(cellStatus &cell, textureObject tile, SDL_Rect dstRect)
-{
-    cell.set(tile, dstRect);
 }

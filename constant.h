@@ -21,11 +21,13 @@ const int MAX_COLUMNS = 20;
 
 // Number of model of tile
 const int NUM_TILES = 33;// Base on number of tiles in list_tiles.txt
-const int MAX_NUM_TEXTURES = NUM_TILES + 6; 
-// winScreen, menu_MahjongScreen, startButton, backButton, Highlight, frontTile
-
-const int BUTTON_WIDTH = 167; // Base on Button START Size
-const int BUTTON_HEIGHT = 68; // Base on Button START Size
+const int MAX_NUM_TEXTURES = NUM_TILES + 14; 
+/* 
+winScreen, startButton * 2 (mouse out and mouse over), backButton * 2 (mouse out and mouse over), continueButton * 2(...)
+Highlight, frontTile, backGround
+nextLevel * 2 (mouse over), prevLevel * 2 (mouse over)
+*/
+const int MAX_MUSICS = 2; // maximum number of musics used
 
 const int LEVEL_WIDTH = 120; // size for text level
 const int LEVEL_HEIGHT = 30; // size for text level
@@ -37,16 +39,13 @@ const int SEGMENT_COUNT_EXIST = 20; // Number of times line is appear when 2 til
 
 #ifdef __MAIN_H
     textureObject textures[MAX_NUM_TEXTURES]; // for storing textures
-    Mix_Music *gMusic = NULL;
-    Mix_Music *gTheme = NULL;
-    Mix_Chunk *winMusic = NULL;
-    Mix_Chunk *introMusic = NULL;
+    Mix_Music *musics[MAX_MUSICS];
+    Mix_Chunk *chunks[MAX_MUSICS];
 #else
     extern textureObject textures[MAX_NUM_TEXTURES];// for storing textures
-    extern Mix_Music *gMusic;
-    extern Mix_Music *gTheme;
-    extern Mix_Chunk *winMusic;
-    extern Mix_Chunk *introMusic;
+    extern Mix_Music *musics[MAX_MUSICS];
+    extern Mix_Chunk *chunks[MAX_MUSICS];
+    extern SDL_Renderer *gRenderer;
 #endif
 
 enum type_Tiles {
@@ -60,13 +59,31 @@ enum type_Screen {
     GAME_SCREEN
 };
 
+enum name_Music{
+    THEME_MUSIC = 0,
+    GAME_LOOP_MUSIC = 1
+};
+
+enum name_Chunk{
+    START_CHUNK = 0,
+    WIN_CHUNK = 1
+};  
+
 enum name_Texture{
     WIN_SCREEN = NUM_TILES,
     BACK_BUTTON = NUM_TILES + 1,
+    BACK_BUTTON_MOUSEOVER = NUM_TILES + 7,
     START_BUTTON = NUM_TILES + 2,
-    MAHJONG_MENU = NUM_TILES + 3,
+    START_BUTTON_MOUSEOVER = NUM_TILES + 3,
     HIGH_LIGHT = NUM_TILES + 4,
-    TILE_FRONT = NUM_TILES + 5
+    TILE_FRONT = NUM_TILES + 5,
+    BACK_GROUND = NUM_TILES + 6,
+    CONTINUE_BUTTON = NUM_TILES + 8,
+    CONTINUE_BUTTON_MOUSEOVER = NUM_TILES + 9,
+    NEXT_LEVEL = NUM_TILES + 10,
+    NEXT_LEVEL_MOUSEOVER = NUM_TILES + 11,
+    PREV_LEVEL = NUM_TILES + 12,
+    PREV_LEVEL_MOUSEOVER = NUM_TILES + 13
 };
 
 #endif

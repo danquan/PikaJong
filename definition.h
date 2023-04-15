@@ -9,77 +9,98 @@
 #include <SDL_ttf.h>
 
 #ifdef __MAIN_H
-    std::mt19937 Rand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
-    long long rand(long long l, long long r) {
-        return Rand() % (r - l + 1) + l;
-    }
-    bool Inside(const SDL_Rect &mRect, const SDL_Point &mPoint) {
-        return mRect.x <= mPoint.x && mPoint.x < mRect.x + mRect.w &&
-               mRect.y <= mPoint.y && mPoint.y < mRect.y + mRect.h;
-    }
-    SDL_Point Center(const SDL_Rect &mRect) {
-        return {(mRect.x + (mRect.x + mRect.w - 1)) / 2, (mRect.y + (mRect.y + mRect.h)) / 2};
-    }
-    int min(int x, int y) {
-        return x < y ? x : y;
-    }
-    std::string int_to_string(int v) {
-        if(v == 0) 
-            return "0";
 
-        std::string s;
+std::mt19937 Rand(std::chrono::high_resolution_clock::now().time_since_epoch().count());
+long long rand(long long l, long long r)
+{
+    return Rand() % (r - l + 1) + l;
+}
+bool Inside(const SDL_Rect &mRect, const SDL_Point &mPoint)
+{
+    return mRect.x <= mPoint.x && mPoint.x < mRect.x + mRect.w &&
+           mRect.y <= mPoint.y && mPoint.y < mRect.y + mRect.h;
+}
+SDL_Point Center(const SDL_Rect &mRect)
+{
+    return {(mRect.x + (mRect.x + mRect.w - 1)) / 2, (mRect.y + (mRect.y + mRect.h)) / 2};
+}
+int min(int x, int y)
+{
+    return x < y ? x : y;
+}
+std::string int_to_string(int v)
+{
+    if (v == 0)
+        return "0";
 
-        while(v > 0) {
-            s.push_back(char(v % 10 + '0'));
-            v /= 10;
-        }
-        for(int i = 0; i * 2 < (int)s.size(); ++i)
-            std::swap(s[i], s[s.size() - 1 - i]);
-        
-        return s;
-    }
-    void Render_Text(SDL_Renderer *gRenderer, const std::string &text, const std::string &link_font, int size_font, SDL_Rect dstRect, SDL_Color colorText) 
+    std::string s;
+
+    while (v > 0)
     {
-        TTF_Font *font = TTF_OpenFont(link_font.c_str(), size_font);
-        if(font == NULL) {
-            std::cout << "No font \"" << link_font << "\" found\n";
-            exit(-1);
-        }
-
-        SDL_Surface *tempSurface = TTF_RenderText_Solid(font, text.c_str(), colorText);
-        if(tempSurface == NULL) {
-            std::cout << "Can't load surface from text:')";
-            exit(-1);
-        }
-        
-        dstRect.w = tempSurface->w;
-        dstRect.h = tempSurface->h;
-
-        SDL_Texture *tempTexture = SDL_CreateTextureFromSurface(gRenderer, tempSurface);
-        if(tempSurface == NULL) {
-            std::cout << "Can't load texture from text :')";
-            exit(-1);
-        }
-
-        SDL_RenderCopy(gRenderer, tempTexture, NULL, &dstRect);
-
-        TTF_CloseFont(font);
-        SDL_FreeSurface(tempSurface);
-        SDL_DestroyTexture(tempTexture);
+        s.push_back(char(v % 10 + '0'));
+        v /= 10;
     }
+    for (int i = 0; i * 2 < (int)s.size(); ++i)
+        std::swap(s[i], s[s.size() - 1 - i]);
+
+    return s;
+}
+
+SDL_Texture *text_to_texture(SDL_Renderer *gRenderer, const std::string &text, const std::string &link_font, int size_font, SDL_Rect &dstRect, SDL_Color colorText) {
+    TTF_Font *font = TTF_OpenFont(link_font.c_str(), size_font);
+    if (font == NULL)
+    {
+        std::cout << "No font \"" << link_font << "\" found\n";
+        exit(-1);
+    }
+
+    SDL_Surface *tempSurface = TTF_RenderText_Solid(font, text.c_str(), colorText);
+    if (tempSurface == NULL)
+    {
+        std::cout << "Can't load surface from text:')";
+        exit(-1);
+    }
+
+    dstRect.w = tempSurface->w;
+    dstRect.h = tempSurface->h;
+
+    SDL_Texture *tempTexture = SDL_CreateTextureFromSurface(gRenderer, tempSurface);
+    if (tempSurface == NULL)
+    {
+        std::cout << "Can't load texture from text :')";
+        exit(-1);
+    }
+
+    TTF_CloseFont(font);
+    SDL_FreeSurface(tempSurface);
+
+    return tempTexture;
+}
+
+void Render_Texture(SDL_Renderer *gRenderer, SDL_Texture *tempTexture, SDL_Rect dstRect)
+{
+    //std::cerr << dstRect.x << " " << dstRect.y << " " << dstRect.w << " " << dstRect.h << "\n";
+    SDL_RenderCopy(gRenderer, tempTexture, NULL, &dstRect);
+    SDL_DestroyTexture(tempTexture);
+}
+
+void draw_rect_with_alpha(SDL_Renderer* renderer, SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha)
+{
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, r, g, b, alpha);
+    SDL_RenderFillRect(renderer, &rect);
+}
+
 #else
-    extern std::mt19937 Rand;
-    extern long long rand(long long l, long long r);
-    extern bool Inside(const SDL_Rect &mRect, const SDL_Point &mPoint);
-    extern SDL_Point Center(const SDL_Rect &mRect);
-    extern min(int x, int y);
-    extern std::string int_to_string(int v);
-    extern void Render_Text(SDL_Renderer *gRenderer, 
-                            const std::string &text, 
-                            const std::string &link_font, 
-                            int size_font,
-                            SDL_Rect dstRect, 
-                            SDL_Color colorText);
+extern std::mt19937 Rand;
+extern long long rand(long long l, long long r);
+extern bool Inside(const SDL_Rect &mRect, const SDL_Point &mPoint);
+extern SDL_Point Center(const SDL_Rect &mRect);
+extern min(int x, int y);
+extern std::string int_to_string(int v);
+extern void Render_Texture(SDL_Renderer *gRenderer, SDL_Texture *tempTexture, SDL_Rect dstRect);
+extern void draw_rect_with_alpha(SDL_Renderer* renderer, SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
+extern SDL_Texture *text_to_texture(SDL_Renderer *gRenderer, const std::string &text, const std::string &link_font, int size_font, SDL_Rect &dstRect, SDL_Color colorText);
 #endif
 
 #endif

@@ -14,12 +14,10 @@
 /// @brief run main process
 void run()
 {
-    createStartButton();
-    createBackButton();
-    createWinScreen();
-    createMahjongScreen();
+    createMenu();
+    createGameScreen();
 
-    Mix_MasterVolume(60);
+    Mix_MasterVolume(100);
 
     SDL_Event e;
     bool quit = false;
@@ -43,17 +41,29 @@ void run()
                 else
                     processMenuMouseDown(x, y);
             }
+            else if(e.type == SDL_MOUSEMOTION) 
+            {
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+
+                if(currentScreen == MENU_SCREEN)
+                    processMenuMouseOver(x, y);
+                else
+                    processGameMouseOver(x, y);
+            }
         }
 
         // Clear screen
         SDL_SetRenderDrawColor(gRenderer, 255, 178, 102, 255);
         SDL_RenderClear(gRenderer);
+        SDL_Rect tempBackGround = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+        SDL_RenderCopy(gRenderer, textures[BACK_GROUND], NULL, &tempBackGround);
 
         // Do something here
         if (currentScreen == MENU_SCREEN)
-            menuRender(gRenderer);
+            menuRender();
         else if (currentScreen == GAME_SCREEN)
-            gameRender(gRenderer);
+            gameRender();
 
         // Force Render
         SDL_RenderPresent(gRenderer);
@@ -121,17 +131,23 @@ void loadMedia(type_Tiles typeCell)
 {
     /*Load Button*/
     loadImage(textures[START_BUTTON], "images\\buttons\\start_Button.png", -1);
+    loadImage(textures[START_BUTTON_MOUSEOVER], "images\\buttons\\start_Button_Mouseover.png", -1);
     loadImage(textures[BACK_BUTTON], "images\\buttons\\back_Button.png", -1);
+    loadImage(textures[BACK_BUTTON_MOUSEOVER], "images\\buttons\\back_Button_Mouseover.png", -1);
+    loadImage(textures[CONTINUE_BUTTON], "images\\buttons\\continue_Button.png", -1);
+    loadImage(textures[CONTINUE_BUTTON_MOUSEOVER], "images\\buttons\\continue_Button_Mouseover.png", -1);
 
     /*load win Screen*/
     loadImage(textures[WIN_SCREEN], "images\\backgrounds\\win.png", -1);
-    loadImage(textures[MAHJONG_MENU], "images\\backgrounds\\mahjong.png", -1);
+
+    /*Load Background*/
+    loadImage(textures[BACK_GROUND], "images\\backgrounds\\background.png", -1);
 
     /*load music*/
-    loadMusic(gMusic, "musics\\game_loop.mp3");
-    loadMusic(gTheme, "musics\\theme_song.mp3");
-    loadChunk(winMusic, "musics\\win.mp3");
-    loadChunk(introMusic, "musics\\intro_sound.mp3");
+    loadMusic(musics[GAME_LOOP_MUSIC], "musics\\game_loop.mp3");
+    loadMusic(musics[THEME_MUSIC], "musics\\theme_song.mp3");
+    loadChunk(chunks[START_CHUNK], "musics\\intro_sound.mp3");
+    loadChunk(chunks[WIN_CHUNK], "musics\\win.mp3");
 
     std::string links = "images\\tiles\\";
 
