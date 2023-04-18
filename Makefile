@@ -2,7 +2,7 @@ main = main.cpp
 textures = textures.cpp
 game_run = game_run.cpp
 menu = menu.cpp
-exe_file = pikajong
+exe_file = PikaJong
 
 # command
 all : 

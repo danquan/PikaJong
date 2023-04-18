@@ -1,5 +1,19 @@
 # Game Pika Chược, develope by Nguyen Dang Quan (aka Lam lai cuoc doi)
 
+<h1>Cài đặt</h1>
+
+Yêu cầu: 
+- GNU C++
+- Cmake
+- SDL 2.0
+
+<h2>Windows</h2>
+- Clone mã nguồn
+- Mở cửa sổ lệnh, điều hướng tới thư mục vừa tải xuống và nhập dòng lệnh:
+**make**
+- Sau đó trong thư mục sẽ xuất hiện một file là *PikaJong.exe*, đây chính là file chạy game, gõ vào dòng lệnh câu lệnh:
+**./PikaJong**
+
 <h1>Luật chơi</h1>
 
 Tại mỗi thời điểm, người chơi cần chọn ra 2 ô sao cho:
