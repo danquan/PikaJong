@@ -49,6 +49,9 @@ void gameRender()
         }
 
         winScreen.Render(gRenderer);
+        
+        // Render Button
+        cellBackButton.Render(gRenderer);
     }
     else
     {
@@ -147,7 +150,7 @@ void createBackButton()
 void createWinScreen()
 {
     SDL_Rect dstRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-    winScreen.set(textures[WIN_SCREEN], dstRect);
+    winScreen.set(textures[SCREEN_WIN], dstRect);
 }
 
 void createGameScreen()
@@ -177,7 +180,7 @@ void updateScore(int coef)
 
 void processGameMouseDown(int x, int y)
 {
-    if (Inside(*cellBackButton.getRect(), {x, y})) // Check if player go back to menu
+    if ((currentScreen == GAME_SCREEN || currentScreen == WIN_SCREEN) && Inside(*cellBackButton.getRect(), {x, y})) // Check if player go back to menu
     {
         currentScreen = MENU_SCREEN;
         canContinue = true;

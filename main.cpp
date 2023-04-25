@@ -138,7 +138,7 @@ void loadMedia(type_Tiles typeCell)
     loadImage(textures[CONTINUE_BUTTON_MOUSEOVER], "images\\buttons\\continue_Button_Mouseover.png", -1);
 
     /*load win Screen*/
-    loadImage(textures[WIN_SCREEN], "images\\backgrounds\\win.png", -1);
+    loadImage(textures[SCREEN_WIN], "images\\backgrounds\\win.png", -1);
 
     /*Load Background*/
     loadImage(textures[BACK_GROUND], "images\\backgrounds\\background.png", -1);

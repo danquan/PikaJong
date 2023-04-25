@@ -56,7 +56,8 @@ enum type_Tiles {
 
 enum type_Screen {
     MENU_SCREEN,
-    GAME_SCREEN
+    GAME_SCREEN,
+    WIN_SCREEN
 };
 
 enum name_Music{
@@ -70,7 +71,7 @@ enum name_Chunk{
 };  
 
 enum name_Texture{
-    WIN_SCREEN = NUM_TILES,
+    SCREEN_WIN = NUM_TILES,
     BACK_BUTTON = NUM_TILES + 1,
     BACK_BUTTON_MOUSEOVER = NUM_TILES + 7,
     START_BUTTON = NUM_TILES + 2,

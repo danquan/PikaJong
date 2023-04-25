@@ -1,30 +1,33 @@
-# Game Pika Chược, develope by Nguyen Dang Quan (aka Lam lai cuoc doi)
+# PikaJong, developed by Nguyen Dang Quan (aka Lam lai cuoc doi)
 
-<h1>Cài đặt</h1>
+# Installation
 
-Yêu cầu: 
+Requirements:
 - GNU C++
 - Cmake
 - SDL 2.0
 
-<h2>Windows</h2>
+## Windows
 
-- Clone mã nguồn
-- Mở cửa sổ lệnh, điều hướng tới thư mục vừa tải xuống và nhập dòng lệnh:
+- Clone source code
+- Open command promt or powershell, direct to the folder that you've clone code and type the following command to run compiling:
 
->**make**
-- Sau đó trong thư mục sẽ xuất hiện một file là **PikaJong.exe**, đây chính là file chạy game, gõ vào dòng lệnh câu lệnh:
+    >**make**
+- After compiling, please check for the existence of executable file name **PikaJong.exe**
+- Then type the following command to run game:
+    - If you use command promt (cmd) then type:
+        >**PikaJong.exe**
+    - If you use powershell then type:
+        >**./PikaJong**
 
->**./PikaJong**
-
-<h1>Luật chơi</h1>
+# Luật chơi
 
 Tại mỗi thời điểm, người chơi cần chọn ra 2 ô sao cho:
 - Hình ghi trên hai ô này là giống nhau
 - Tồn tại các đoạn thẳng tạo thành không quá 3 đường gấp khúc nối giữa hai ô
 Khi đó, hai ô ấy sẽ biến mất
 
-<h1> Thêm Level </h1>
+# Thêm Level
 
 Có thể tùy biến levels; cụ thể, để tạo level mới bạn cần:
 - Thêm một file txt có dạng `<ten_level>.txt` vào thư mục levels

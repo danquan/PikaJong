@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <cstdio>
 #include <fstream>
+#include <vector>
 #include <cassert>
 #include "menu.h"
 #include "definition.h"
