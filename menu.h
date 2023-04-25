@@ -1,7 +1,12 @@
 #ifndef __MENU_H
 #define __MENU_H
 
-#include <SDL.h>
+#if defined(_WIN64) || defined(_WIN32)
+    #include <SDL.h>
+#else
+    #include <SDL2/SDL.h>
+#endif
+
 
 void menuRender();
 void processMenuMouseDown(int x, int y);

@@ -1,8 +1,15 @@
 #ifndef __CONSTANT_H
 #define __CONSTANT_H
+
+#if defined(_WIN64) || defined(_WIN32)
+    #include <SDL.h>
+    #include <SDL_mixer.h>
+#else
+    #include <SDL2/SDL.h>
+    #include <SDL2/SDL_mixer.h>
+#endif
+
 #include <string>
-#include <SDL.h>
-#include <SDL_mixer.h>
 #include "textures.h"
 
 // Screen size

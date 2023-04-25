@@ -1,4 +1,9 @@
-#include <SDL.h>
+#if defined(_WIN64) || defined(_WIN32)
+    #include <SDL.h>
+#else
+    #include <SDL2/SDL.h>
+#endif
+
 #include <cstdio>
 #include <fstream>
 #include <vector>
