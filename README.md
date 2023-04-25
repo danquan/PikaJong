@@ -30,8 +30,8 @@ Those chosen tiles will disappear immediately
 # Add more levels
 
 My game allows you to add your own levels; you follow the below guideline:
-- Create a file with name `<ten_level>.txt` in folder `levels`
-- Add one more line with content `<ten_level>` in file `list-levels.text` in the same folder
+- Create a file with name `<level_name>.txt` in folder `levels`
+- Add one more line with content `<level_name>` in file `list-levels.text` in the same folder
 
 The file `<ten_level>.txt` consists of:
 - The first line contains two integers $m, n$ ($m\le 11, n\le 20$) - number of rows and number of columns
