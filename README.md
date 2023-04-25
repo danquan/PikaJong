@@ -6,8 +6,13 @@ This is a game that I created as a personal project. It's a simple game that eas
 
 Prerequisites:
 - GNU C++
-- SDL 2.0 (In Windows, I've copied it to the source code)
-
+- SDL 2.0 :
+    - In Windows, I've copied it to the source code
+    - In Linux, please follow these tutorials to install:
+        - [SDL 2.0](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/linux/index.php)
+        - [SDL Image](https://lazyfoo.net/tutorials/SDL/06_extension_libraries_and_loading_other_image_formats/linux/index.php)
+        - [SDL Mixer](https://lazyfoo.net/tutorials/SDL/21_sound_effects_and_music/index.php)
+        - [SDL TTF](https://lazyfoo.net/tutorials/SDL/16_true_type_fonts/index.php)
 ## Windows
 
 - Clone source code
