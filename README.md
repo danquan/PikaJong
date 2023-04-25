@@ -8,6 +8,7 @@ Yêu cầu:
 - SDL 2.0
 
 <h2>Windows</h2>
+
 - Clone mã nguồn
 - Mở cửa sổ lệnh, điều hướng tới thư mục vừa tải xuống và nhập dòng lệnh:
 **make**
