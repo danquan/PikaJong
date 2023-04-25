@@ -27,14 +27,14 @@ Player(s) need to choose 2 tiles that:
 
 Those chosen tiles will disappear immediately
 
-# Thêm Level
+# Add more levels
 
-Có thể tùy biến levels; cụ thể, để tạo level mới bạn cần:
-- Thêm một file txt có dạng `<ten_level>.txt` vào thư mục levels
-- Thêm một dòng chứa `<ten_level>` vào file `list-levels.text`
+My game allows you to add your own levels; you follow the below guideline:
+- Create a file with name `<ten_level>.txt` in folder `levels`
+- Add one more line with content `<ten_level>` in file `list-levels.text` in the same folder
 
-Nội dung của file `<ten_level>.txt` bao gồm:
-- Dòng đầu tiên chứa hai số nguyên dương $m, n$ ($m\le 11, n\le 20$) là số hàng và số cột của bảng
-- $m$ dòng tiếp, mỗi dòng chứa $n$ số nguyên không âm mô tả bảng đã cho; trong đó:
-    - Mỗi số nguyên có giá trị từ $0$ đến $32$
-    - Hai ô có số giống nhau thì mang hình giống nhau (Hình được in ra sẽ lấy theo thứ tự trong file `list_tiles.txt`)
+The file `<ten_level>.txt` consists of:
+- The first line contains two integers $m, n$ ($m\le 11, n\le 20$) - number of rows and number of columns
+- The next $m$ lines, in each line there are $n$ integers:
+    - Each one has value from $0$ to $32$
+    - Two cells have same number should have the same characters (The chosen character is followed by the order of tiles in `list_tiles.txt`)
