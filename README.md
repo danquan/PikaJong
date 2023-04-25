@@ -11,9 +11,11 @@ Yêu cầu:
 
 - Clone mã nguồn
 - Mở cửa sổ lệnh, điều hướng tới thư mục vừa tải xuống và nhập dòng lệnh:
-**make**
-- Sau đó trong thư mục sẽ xuất hiện một file là *PikaJong.exe*, đây chính là file chạy game, gõ vào dòng lệnh câu lệnh:
-**./PikaJong**
+
+>**make**
+- Sau đó trong thư mục sẽ xuất hiện một file là **PikaJong.exe**, đây chính là file chạy game, gõ vào dòng lệnh câu lệnh:
+
+>**./PikaJong**
 
 <h1>Luật chơi</h1>
 
