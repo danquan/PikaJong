@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 /// @param ImageObject texture to save image
 /// @param links where image locate
 /// @param alpha if alpha mode is enabled, alpha is the alphamod; otherwise, alpha = -1
-void loadImage(textureObject &ImageObject, const std::string &links, int alpha = -1)
+void loadImage(SDL_Texture* &ImageObject, const std::string &links, int alpha = -1)
 {
     /*load Button*/
     SDL_Surface *tempImage = IMG_Load(links.c_str());

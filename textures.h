@@ -5,11 +5,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-using textureObject = SDL_Texture*;
-
 class cellStatus{
 private:
-    textureObject texture;
+    SDL_Texture* texture;
     SDL_Rect dstRect; // Destination Rect, where this cell locate
 
 public:
@@ -20,10 +18,10 @@ public:
 
     SDL_Rect* getRect() {return &dstRect;}
     bool empty() {return texture == NULL;}
-    textureObject getTexture() { return texture; }
+    SDL_Texture* getTexture() { return texture; }
     
     void Render(SDL_Renderer *gRenderer);
-    void set(textureObject texture, SDL_Rect dstRect);
+    void set(SDL_Texture* texture, SDL_Rect dstRect);
     void reset();
 };
 

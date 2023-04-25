@@ -19,7 +19,7 @@ void loadChunk(Mix_Chunk *&gChunck, std::string links);
 void loadMusic(Mix_Music *&gMusic, std::string links);
 
 /*Load Image*/
-void loadImage(textureObject &ImageObject, const std::string &links);
+void loadImage(SDL_Texture* &ImageObject, const std::string &links);
 
 /*Load tiles, background,...*/
 void loadMedia(type_Tiles typeCell = RANDOM_TYPE);

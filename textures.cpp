@@ -2,7 +2,7 @@
 #include "definition.h"
 #include "constant.h"
 
-/*Code for textureObject*/
+/*Code for SDL_Texture**/
 
 /*Code for cellStatus*/
 
@@ -16,7 +16,7 @@ void cellStatus::reset() {
 }
 
 
-void cellStatus::set(textureObject texture, SDL_Rect dstRect) {
+void cellStatus::set(SDL_Texture* texture, SDL_Rect dstRect) {
     this->texture = texture;
     this->dstRect = dstRect;
 }

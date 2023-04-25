@@ -38,11 +38,11 @@ const int MAHJONG_HEGHT = 540; // Base on Mahjong.png size
 const int SEGMENT_COUNT_EXIST = 20; // Number of times line is appear when 2 tiles are matched
 
 #ifdef __MAIN_H
-    textureObject textures[MAX_NUM_TEXTURES]; // for storing textures
+    SDL_Texture* textures[MAX_NUM_TEXTURES]; // for storing textures
     Mix_Music *musics[MAX_MUSICS];
     Mix_Chunk *chunks[MAX_MUSICS];
 #else
-    extern textureObject textures[MAX_NUM_TEXTURES];// for storing textures
+    extern SDL_Texture* textures[MAX_NUM_TEXTURES];// for storing textures
     extern Mix_Music *musics[MAX_MUSICS];
     extern Mix_Chunk *chunks[MAX_MUSICS];
     extern SDL_Renderer *gRenderer;
