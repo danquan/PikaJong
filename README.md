@@ -36,6 +36,7 @@ Prerequisites:
 - After compiling, please check for the existence of executable file name **PikaJong**
 - Then type the following command to run game:
     >**./PikaJong**
+    
 # Game play
 
 Player(s) need to choose 2 tiles that:
@@ -54,7 +55,7 @@ The file `<level_name>.txt` consists of:
 - The first line contains two integers $m, n$ ($m\le 11, n\le 20$) - number of rows and number of columns
 - The next $m$ lines, in each line there are $n$ integers:
     - Each one has value from $0$ to $32$
-    - Two cells have same number should have the same characters (The chosen character is followed by the order of tiles in `list_tiles.txt`)
+    - Two cells have same number should have the same character (The chosen character is followed by the order of tiles in `list_tiles.txt`)
 
 # Support
 
