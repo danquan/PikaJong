@@ -82,6 +82,14 @@ void Render_Texture(SDL_Renderer *gRenderer, SDL_Texture *tempTexture, SDL_Rect 
     SDL_DestroyTexture(tempTexture);
 }
 
+void SetVolume(int x) {
+#if defined(_WIN64) || defined(_WIN32)
+    Mix_MasterVolume(x);
+#else
+    Mix_Volume(x);
+#endif
+}
+
 void draw_rect_with_alpha(SDL_Renderer* renderer, SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha)
 {
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);

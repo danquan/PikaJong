@@ -26,7 +26,7 @@ void run()
     createMenu();
     createGameScreen();
 
-    Mix_MasterVolume(100);
+    SetVolume(100);
 
     SDL_Event e;
     bool quit = false;

@@ -1,6 +1,8 @@
 # PikaJong, developed by Nguyen Dang Quan (aka Lam lai cuoc doi)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This is a game that I created as a personal project. It's a simple game that easy to play for all ages. The game is built with C++ and uses SDL 2.0.
+
 
 # Installation
 
@@ -15,8 +17,8 @@ Prerequisites:
         - [SDL TTF](https://lazyfoo.net/tutorials/SDL/16_true_type_fonts/index.php)
 ## Windows
 
-- Clone source code
-- Open command promt or powershell, direct to the folder that you've clone code and type the following command to run compiling:
+- Download and extract source code
+- Open command promt or powershell, direct to the folder that you've extracted code and type the following command to do the compiling:
 
     >**./make**
 - After compiling, please check for the existence of executable file name **PikaJong.exe**
