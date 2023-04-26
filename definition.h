@@ -86,7 +86,7 @@ void SetVolume(int x) {
 #if defined(_WIN64) || defined(_WIN32)
     Mix_MasterVolume(x);
 #else
-    Mix_MasterVolume(x);
+    Mix_Volume(-1, x);
 #endif
 }
 

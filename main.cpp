@@ -97,14 +97,14 @@ void loadImage(SDL_Texture* &ImageObject, const std::string &links, int alpha = 
     SDL_Surface *tempImage = IMG_Load(links.c_str());
     if (tempImage == NULL)
     {
-        printf("Fail to load image %s\n", links.c_str());
+        printf("Fail to load image %s,\n Error: %s\n", links.c_str(), SDL_GetError());
         exit(-1);
     }
 
     ImageObject = SDL_CreateTextureFromSurface(gRenderer, tempImage);
     if (ImageObject == NULL)
     {
-        printf("Fail to create texture from image %s\n", links.c_str());
+        printf("Fail to create texture from image %s,\n Error: %s\n", links.c_str(), SDL_GetError());
         exit(-1);
     }
 
@@ -139,29 +139,29 @@ void loadMusic(Mix_Music *&gMusic, std::string links) {
 void loadMedia(type_Tiles typeCell)
 {
     /*Load Button*/
-    loadImage(textures[START_BUTTON], "images\\buttons\\start_Button.png", -1);
-    loadImage(textures[START_BUTTON_MOUSEOVER], "images\\buttons\\start_Button_Mouseover.png", -1);
-    loadImage(textures[BACK_BUTTON], "images\\buttons\\back_Button.png", -1);
-    loadImage(textures[BACK_BUTTON_MOUSEOVER], "images\\buttons\\back_Button_Mouseover.png", -1);
-    loadImage(textures[CONTINUE_BUTTON], "images\\buttons\\continue_Button.png", -1);
-    loadImage(textures[CONTINUE_BUTTON_MOUSEOVER], "images\\buttons\\continue_Button_Mouseover.png", -1);
+    loadImage(textures[START_BUTTON], ".\/images\/buttons\/start_Button.png", -1);
+    loadImage(textures[START_BUTTON_MOUSEOVER], ".\/images\/buttons\/start_Button_Mouseover.png", -1);
+    loadImage(textures[BACK_BUTTON], ".\/images\/buttons\/back_Button.png", -1);
+    loadImage(textures[BACK_BUTTON_MOUSEOVER], ".\/images\/buttons\/back_Button_Mouseover.png", -1);
+    loadImage(textures[CONTINUE_BUTTON], ".\/images\/buttons\/continue_Button.png", -1);
+    loadImage(textures[CONTINUE_BUTTON_MOUSEOVER], ".\/images\/buttons\/continue_Button_Mouseover.png", -1);
 
     /*load win Screen*/
-    loadImage(textures[SCREEN_WIN], "images\\backgrounds\\win.png", -1);
+    loadImage(textures[SCREEN_WIN], ".\/images\/backgrounds\/win.png", -1);
 
     /*Load Background*/
-    loadImage(textures[BACK_GROUND], "images\\backgrounds\\background.png", -1);
+    loadImage(textures[BACK_GROUND], ".\/images\/backgrounds\/background.png", -1);
 
     /*load music*/
-    loadMusic(musics[GAME_LOOP_MUSIC], "musics\\game_loop.mp3");
-    loadMusic(musics[THEME_MUSIC], "musics\\theme_song.mp3");
-    loadChunk(chunks[START_CHUNK], "musics\\intro_sound.mp3");
-    loadChunk(chunks[WIN_CHUNK], "musics\\win.mp3");
+    loadMusic(musics[GAME_LOOP_MUSIC], ".\/musics\/game_loop.mp3");
+    loadMusic(musics[THEME_MUSIC], ".\/musics\/theme_song.mp3");
+    loadChunk(chunks[START_CHUNK], ".\/musics\/intro_sound.mp3");
+    loadChunk(chunks[WIN_CHUNK], ".\/musics\/win.mp3");
 
-    std::string links = "images\\tiles\\";
+    std::string links = ".\/images\/tiles\/";
 
     /*load highlight*/
-    loadImage(textures[HIGH_LIGHT], links + "chosen.png", 125);
+    loadImage(textures[HIGH_LIGHT], links + "Chosen.png", 125);
 
     /*load backgound tile, aka front tile*/
     loadImage(textures[TILE_FRONT], links + "Front.png", -1);

@@ -76,7 +76,7 @@ void processMenuMouseDown(int x, int y)
     if(Inside(*next_Level.getRect(), {x, y})) {
         currentLevel = currentLevel == (int)list_levels.size() - 1 ? 0 : currentLevel + 1;
         SDL_Rect dstRect = *chosen_level.getRect();
-        SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\\comic-sans.ttf", 40, dstRect, {255, 255, 255});
+        SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\/comic-sans.ttf", 40, dstRect, {255, 255, 255});
         chosen_level.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
         canContinue = false;
     }
@@ -84,7 +84,7 @@ void processMenuMouseDown(int x, int y)
     if(Inside(*prev_Level.getRect(), {x, y})) {
         currentLevel = currentLevel == 0 ? (int)list_levels.size() - 1 : currentLevel - 1;
         SDL_Rect dstRect = *chosen_level.getRect();
-        SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\\comic-sans.ttf", 40, dstRect, {255, 255, 255});
+        SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\/comic-sans.ttf", 40, dstRect, {255, 255, 255});
         chosen_level.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
         canContinue = false;
     }
@@ -134,20 +134,20 @@ void createConfigTable()
 
     // First, render text
     SDL_Rect dstRect= {0, configTable.y + 50, 0, 0};
-    SDL_Texture *tempTexture = text_to_texture(gRenderer, "LEVEL", "fonts\\comic-sans-bold.ttf", 40, dstRect, {255, 255, 255});
+    SDL_Texture *tempTexture = text_to_texture(gRenderer, "LEVEL", "fonts\/comic-sans-bold.ttf", 40, dstRect, {255, 255, 255});
     level_text.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
     
     //then, render level
     dstRect.y += dstRect.h + 20;    
-    tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\\comic-sans.ttf", 40, dstRect, {255, 255, 255});
+    tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\/comic-sans.ttf", 40, dstRect, {255, 255, 255});
     chosen_level.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
     
-    textures[NEXT_LEVEL] = text_to_texture(gRenderer, ">", "fonts\\comic-sans-bold.ttf", 40, dstRect, {255, 255, 255});
-    textures[NEXT_LEVEL_MOUSEOVER] = text_to_texture(gRenderer, ">", "fonts\\comic-sans-bold.ttf", 40, dstRect, {255, 0, 0});
+    textures[NEXT_LEVEL] = text_to_texture(gRenderer, ">", "fonts\/comic-sans-bold.ttf", 40, dstRect, {255, 255, 255});
+    textures[NEXT_LEVEL_MOUSEOVER] = text_to_texture(gRenderer, ">", "fonts\/comic-sans-bold.ttf", 40, dstRect, {255, 0, 0});
     next_Level.set(textures[NEXT_LEVEL], {configTable.w * 3 / 4 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
     
-    textures[PREV_LEVEL] = text_to_texture(gRenderer, "<", "fonts\\comic-sans-bold.ttf", 40, dstRect, {255, 255, 255});
-    textures[PREV_LEVEL_MOUSEOVER] = text_to_texture(gRenderer, "<", "fonts\\comic-sans-bold.ttf", 40, dstRect, {255, 0, 0});
+    textures[PREV_LEVEL] = text_to_texture(gRenderer, "<", "fonts\/comic-sans-bold.ttf", 40, dstRect, {255, 255, 255});
+    textures[PREV_LEVEL_MOUSEOVER] = text_to_texture(gRenderer, "<", "fonts\/comic-sans-bold.ttf", 40, dstRect, {255, 0, 0});
     prev_Level.set(textures[PREV_LEVEL_MOUSEOVER], {configTable.w / 4 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
 
 }
@@ -166,7 +166,7 @@ void createContinueButton() {
 
 // read list of levels
 void readLevels() {
-    std::ifstream in("levels\\list-levels.txt");
+    std::ifstream in("levels\/list-levels.txt");
     std::string name_level;
 
     while(in >> name_level)

@@ -50,6 +50,7 @@ void gameRender()
         if (Mix_PlayingMusic() != 0)
         {
             Mix_HaltMusic();
+            SetVolume(40);
             Mix_PlayChannel(-1, chunks[WIN_CHUNK], 0);
         }
 
@@ -75,7 +76,7 @@ void gameRender()
 
         /*--- RenderScore ---*/
         SDL_Rect tempDstRect = {0, infoTable.y + 15, 0, 0};
-        SDL_Texture *tempTexture = text_to_texture(gRenderer, "SCORES", "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        SDL_Texture *tempTexture = text_to_texture(gRenderer, "SCORES", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
         Render_Texture(gRenderer, // renderer
                         tempTexture, // text
                         {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
@@ -83,26 +84,26 @@ void gameRender()
         tempDstRect.y += tempDstRect.h;
 
 
-        tempTexture = text_to_texture(gRenderer, int_to_string(score), "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        tempTexture = text_to_texture(gRenderer, int_to_string(score), "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
         Render_Texture(gRenderer, // renderer
                         tempTexture, // text
                         {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
         tempDstRect.y += tempDstRect.h + 20;
 
         // Render Remaining Tiles
-        tempTexture = text_to_texture(gRenderer, "REMAINING", "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        tempTexture = text_to_texture(gRenderer, "REMAINING", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
         Render_Texture(gRenderer, // renderer
                         tempTexture, // text
                         {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
         tempDstRect.y += tempDstRect.h;
 
-        tempTexture = text_to_texture(gRenderer, "TILES", "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        tempTexture = text_to_texture(gRenderer, "TILES", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
         Render_Texture(gRenderer, // renderer
                         tempTexture, // text
                         {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
         tempDstRect.y += tempDstRect.h;
 
-        tempTexture = text_to_texture(gRenderer, int_to_string(numRemains), "fonts\\comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+        tempTexture = text_to_texture(gRenderer, int_to_string(numRemains), "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
         Render_Texture(gRenderer, // renderer
                         tempTexture, // text
                         {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
@@ -352,7 +353,7 @@ void assignLevel(const std::string &lv)
     level = lv; // assign level
     resetGame();
 
-    std::ifstream inf(("levels\\" + level + ".txt").c_str());
+    std::ifstream inf(("levels\/" + level + ".txt").c_str());
 
     inf >> numRows >> numCols;
     numRemains = numRows * numCols;
