@@ -4,6 +4,8 @@
 #include "textures.h"
 
 void gameRender(); // Render play screen
+    void render_infoTable(); // render info table
+    void render_MahJongTile(cellStatus &cell); // render a tile on table
 void assignLevel(const std::string &lv); // set level for game
 void createBackButton(); // use for back button
 void createWinScreen(); // create win screen
@@ -16,6 +18,7 @@ void Trace(SDL_Point src, SDL_Point dst, int dir, int numchange); // For making 
 (x, y) -> position where the mouse click on
 */
 void processGameMouseDown(int x, int y); // detect and process when click mouse
+    void tryConnectChosenTiles();
 void processGameMouseOver(int x, int y); // detect mouse over
 
 #endif

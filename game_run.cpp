@@ -1,7 +1,7 @@
 #if defined(_WIN64) || defined(_WIN32)
-    #include <SDL.h>
+#include <SDL.h>
 #else
-    #include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 #endif
 
 #include <cstdio>
@@ -33,7 +33,7 @@ int numChosen;
 SDL_Point posChosen[2];
 
 cellStatus cellBackButton, winScreen;
-std::vector<traceSegment> segments;      // use to show trace when 2 tiles are disappeared
+std::vector<traceSegment> segments; // use to show trace when 2 tiles are disappeared
 
 extern bool canContinue; // if player can continue the remaining game
 
@@ -46,6 +46,7 @@ void gameRender()
 {
     if (numRemains == 0) // Player won game
     {
+        currentScreen = WIN_SCREEN;
         // Play win music
         if (Mix_PlayingMusic() != 0)
         {
@@ -55,7 +56,7 @@ void gameRender()
         }
 
         winScreen.Render(gRenderer);
-        
+
         // Render Button
         cellBackButton.Render(gRenderer);
     }
@@ -71,42 +72,8 @@ void gameRender()
         // Render Button
         cellBackButton.Render(gRenderer);
 
-        // render Infotable
-        draw_rect_with_alpha(gRenderer, infoTable, 0xff, 0xff, 0xff, 128);
-
-        /*--- RenderScore ---*/
-        SDL_Rect tempDstRect = {0, infoTable.y + 15, 0, 0};
-        SDL_Texture *tempTexture = text_to_texture(gRenderer, "SCORES", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
-        Render_Texture(gRenderer, // renderer
-                        tempTexture, // text
-                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
-
-        tempDstRect.y += tempDstRect.h;
-
-
-        tempTexture = text_to_texture(gRenderer, int_to_string(score), "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
-        Render_Texture(gRenderer, // renderer
-                        tempTexture, // text
-                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
-        tempDstRect.y += tempDstRect.h + 20;
-
-        // Render Remaining Tiles
-        tempTexture = text_to_texture(gRenderer, "REMAINING", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
-        Render_Texture(gRenderer, // renderer
-                        tempTexture, // text
-                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
-        tempDstRect.y += tempDstRect.h;
-
-        tempTexture = text_to_texture(gRenderer, "TILES", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
-        Render_Texture(gRenderer, // renderer
-                        tempTexture, // text
-                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
-        tempDstRect.y += tempDstRect.h;
-
-        tempTexture = text_to_texture(gRenderer, int_to_string(numRemains), "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
-        Render_Texture(gRenderer, // renderer
-                        tempTexture, // text
-                        {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+        // render information table
+        render_infoTable();
 
         // Render Cell
         for (int i = 0; i < numRows; ++i)
@@ -114,14 +81,8 @@ void gameRender()
             {
                 if (!isDisappear[i][j])
                 {
-                    SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, cell[i][j].getRect()); // Render background tile
-
-                    tempDstRect = *cell[i][j].getRect();
-                    tempDstRect.x += 2; // minimize tile
-                    tempDstRect.y += 2; // minimize tile
-                    tempDstRect.w -= 4; // minimize tile
-                    tempDstRect.h -= 4; // minimize tile
-                    SDL_RenderCopy(gRenderer, cell[i][j].getTexture(), NULL, &tempDstRect);
+                    // render tile located at cell (i, j)
+                    render_MahJongTile(cell[i][j]);
 
                     if (isChosen[i][j])
                         SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, cell[i][j].getRect());
@@ -143,6 +104,59 @@ void gameRender()
             }
         }
     }
+}
+
+// Render one tile on the table
+void render_MahJongTile(cellStatus &cell)
+{
+    SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, cell.getRect()); // Render background tile
+
+    SDL_Rect tempDstRect = *cell.getRect();
+    tempDstRect.x += 2; // minimize tile
+    tempDstRect.y += 2; // minimize tile
+    tempDstRect.w -= 4; // minimize tile
+    tempDstRect.h -= 4; // minimize tile
+
+    SDL_RenderCopy(gRenderer, cell.getTexture(), NULL, &tempDstRect);
+}
+
+void render_infoTable()
+{
+    // render Infotable
+    draw_rect_with_alpha(gRenderer, infoTable, 0xff, 0xff, 0xff, 128);
+
+    /*--- RenderScore ---*/
+    SDL_Rect tempDstRect = {0, infoTable.y + 15, 0, 0};
+    SDL_Texture *tempTexture = text_to_texture(gRenderer, "SCORES", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+    Render_Texture(gRenderer,                                                                                       // renderer
+                   tempTexture,                                                                                     // text
+                   {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+
+    tempDstRect.y += tempDstRect.h;
+
+    tempTexture = text_to_texture(gRenderer, int_to_string(score), "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+    Render_Texture(gRenderer,                                                                                       // renderer
+                   tempTexture,                                                                                     // text
+                   {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+    tempDstRect.y += tempDstRect.h + 20;
+
+    // Render Remaining Tiles
+    tempTexture = text_to_texture(gRenderer, "REMAINING", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+    Render_Texture(gRenderer,                                                                                       // renderer
+                   tempTexture,                                                                                     // text
+                   {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+    tempDstRect.y += tempDstRect.h;
+
+    tempTexture = text_to_texture(gRenderer, "TILES", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+    Render_Texture(gRenderer,                                                                                       // renderer
+                   tempTexture,                                                                                     // text
+                   {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
+    tempDstRect.y += tempDstRect.h;
+
+    tempTexture = text_to_texture(gRenderer, int_to_string(numRemains), "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
+    Render_Texture(gRenderer,                                                                                       // renderer
+                   tempTexture,                                                                                     // text
+                   {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
 }
 
 void createBackButton()
@@ -184,6 +198,29 @@ void updateScore(int coef)
     score += 3 - coef; // 0 -> 3 points, 1 -> 2 points, 3 -> 1 points
 }
 
+// Try to connect 2 chosen tiles
+void tryConnectChosenTiles()
+{
+    if (cell[posChosen[0].x][posChosen[0].y].getTexture() != cell[posChosen[1].x][posChosen[1].y].getTexture())
+        return; // If characters on 2 tiles are not the same then do nothing
+
+    doSearch(posChosen[0], posChosen[1]);
+
+    for (int num_change = 0; num_change < 3; ++num_change) // Prio number of change first
+        for (int dir = 0; dir < 2; ++dir)
+            if (par[posChosen[1].x + 1][posChosen[1].y + 1][dir][num_change] != -1) // this state, but we need to add 1 to coordinator of poschosen
+            {
+                isDisappear[posChosen[0].x][posChosen[0].y] = true;
+                isDisappear[posChosen[1].x][posChosen[1].y] = true;
+
+                updateScore(num_change);
+
+                Trace(posChosen[0], posChosen[1], dir, num_change);
+                // Trace for draw segments
+                return;
+            }
+}
+
 void processGameMouseDown(int x, int y)
 {
     if ((currentScreen == GAME_SCREEN || currentScreen == WIN_SCREEN) && Inside(*cellBackButton.getRect(), {x, y})) // Check if player go back to menu
@@ -206,7 +243,7 @@ void processGameMouseDown(int x, int y)
             {
                 isChosen[i][j] = !isChosen[i][j];
 
-                if (isChosen[i][j])
+                if (isChosen[i][j]) // new chosen tile
                     posChosen[numChosen++] = {i, j};
                 else
                     --numChosen;
@@ -217,25 +254,7 @@ done_click:;
 
     if (numChosen == 2)
     {
-        if (cell[posChosen[0].x][posChosen[0].y].getTexture() == cell[posChosen[1].x][posChosen[1].y].getTexture())
-        {
-            doSearch(posChosen[0], posChosen[1]);
-
-            for (int num_change = 0; num_change < 3; ++num_change) // Prio number of change first
-                for (int dir = 0; dir < 2; ++dir)
-                    if (par[posChosen[1].x + 1][posChosen[1].y + 1][dir][num_change] != -1) // this state, but we need to add 1 to coordinator of poschosen
-                    {
-                        isDisappear[posChosen[0].x][posChosen[0].y] = true;
-                        isDisappear[posChosen[1].x][posChosen[1].y] = true;
-
-                        updateScore(num_change);
-
-                        Trace(posChosen[0], posChosen[1], dir, num_change);
-                        // Trace for draw segments
-                        goto done_trace;
-                    }
-        done_trace:;
-        }
+        tryConnectChosenTiles();
 
         isChosen[posChosen[0].x][posChosen[0].y] = false;
         isChosen[posChosen[1].x][posChosen[1].y] = false;
@@ -283,7 +302,7 @@ void Trace(SDL_Point src, SDL_Point dst, int dir, int num_change)
 }
 
 // use BFS to find valid path between 2 cell
-//  idea: par[x][y][z][]
+//  idea: par[x][y][z][t]-> the state before we reach (x, y) with direction z (0 for horizontal, 1 for vertical) and used t changes
 void doSearch(SDL_Point src, SDL_Point dst)
 {
     memset(par, -1, sizeof par);
@@ -344,7 +363,8 @@ void createTable()
 }
 
 // the area that show informations
-void createInfoTable() {
+void createInfoTable()
+{
     infoTable = {(table.x - 190) / 2, (SCREEN_HEIGHT - 300) / 2, 190, 300};
 }
 
