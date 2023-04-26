@@ -15,6 +15,7 @@ Prerequisites:
         - [SDL Image](https://lazyfoo.net/tutorials/SDL/06_extension_libraries_and_loading_other_image_formats/linux/index.php)
         - [SDL Mixer](https://lazyfoo.net/tutorials/SDL/21_sound_effects_and_music/index.php)
         - [SDL TTF](https://lazyfoo.net/tutorials/SDL/16_true_type_fonts/index.php)
+
 ## Windows
 
 - Download and extract source code
@@ -28,6 +29,13 @@ Prerequisites:
     - If you use powershell then type:
         >**./PikaJong**
 
+## Linux
+- Download and extract source code
+- Open terminal, direct to the folder that you've extracted code and type the following command to do the compiling:
+    >**./make.sh**
+- After compiling, please check for the existence of executable file name **PikaJong**
+- Then type the following command to run game:
+    >**./PikaJong**
 # Game play
 
 Player(s) need to choose 2 tiles that:
