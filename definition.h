@@ -86,7 +86,7 @@ void SetVolume(int x) {
 #if defined(_WIN64) || defined(_WIN32)
     Mix_MasterVolume(x);
 #else
-    Mix_Volume(x);
+    Mix_MasterVolume(x);
 #endif
 }
 
@@ -105,6 +105,7 @@ extern std::string int_to_string(int v);
 extern void Render_Texture(SDL_Renderer *gRenderer, SDL_Texture *tempTexture, SDL_Rect dstRect);
 extern void draw_rect_with_alpha(SDL_Renderer* renderer, SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
 extern SDL_Texture *text_to_texture(SDL_Renderer *gRenderer, const std::string &text, const std::string &link_font, int size_font, SDL_Rect &dstRect, SDL_Color colorText);
+extern void void SetVolume(int x);
 #endif
 
 #endif
