@@ -100,7 +100,7 @@ void draw_rect_with_alpha(SDL_Renderer* renderer, SDL_Rect rect, Uint8 r, Uint8 
 #else
 extern bool Inside(const SDL_Rect &mRect, const SDL_Point &mPoint);
 extern SDL_Point Center(const SDL_Rect &mRect);
-extern min(int x, int y);
+extern int min(int x, int y);
 extern std::string int_to_string(int v);
 extern void Render_Texture(SDL_Renderer *gRenderer, SDL_Texture *tempTexture, SDL_Rect dstRect);
 extern void draw_rect_with_alpha(SDL_Renderer* renderer, SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha);
