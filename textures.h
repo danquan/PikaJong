@@ -12,14 +12,14 @@
 #endif
 
 
-class cellStatus{
+class LTexture{
 private:
     SDL_Texture* texture;
     SDL_Rect dstRect; // Destination Rect, where this cell locate
 
 public:
 
-    cellStatus() {
+    LTexture() {
         texture = NULL;
     }
 
@@ -30,6 +30,27 @@ public:
     void Render(SDL_Renderer *gRenderer);
     void set(SDL_Texture* texture, SDL_Rect dstRect);
     void reset();
+};
+
+class Pika_Tile : public LTexture {
+    public:
+    Pika_Tile() {
+         reset();
+    }
+};
+
+class LButton : public LTexture {
+    public:
+    LButton() {
+        reset();
+    }
+};
+
+class LText : public LTexture {
+    public:
+    LText () {
+        reset();
+    }
 };
 
 class traceSegment {

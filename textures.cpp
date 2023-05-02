@@ -4,19 +4,19 @@
 
 /*Code for SDL_Texture**/
 
-/*Code for cellStatus*/
+/*Code for LTexture*/
 
-void cellStatus::Render(SDL_Renderer *gRenderer) {
+void LTexture::Render(SDL_Renderer *gRenderer) {
     if(!empty())
         SDL_RenderCopy(gRenderer, texture, NULL, &dstRect);
 }
 
-void cellStatus::reset() {
+void LTexture::reset() {
     this->texture = NULL;
 }
 
 
-void cellStatus::set(SDL_Texture* texture, SDL_Rect dstRect) {
+void LTexture::set(SDL_Texture* texture, SDL_Rect dstRect) {
     this->texture = texture;
     this->dstRect = dstRect;
 }

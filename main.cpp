@@ -45,7 +45,7 @@ void run()
                 int x, y;
                 SDL_GetMouseState(&x, &y);
 
-                if (currentScreen == GAME_SCREEN)
+                if (currentScreen == GAME_SCREEN || currentScreen == WIN_SCREEN)
                     processGameMouseDown(x, y);
                 else
                     processMenuMouseDown(x, y);
@@ -71,7 +71,7 @@ void run()
         // Do something here
         if (currentScreen == MENU_SCREEN)
             menuRender();
-        else if (currentScreen == GAME_SCREEN)
+        else if (currentScreen == GAME_SCREEN || currentScreen == WIN_SCREEN)
             gameRender();
 
         // Force Render

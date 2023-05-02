@@ -39,9 +39,6 @@ const int MAX_MUSICS = 2; // maximum number of musics used
 const int LEVEL_WIDTH = 120; // size for text level
 const int LEVEL_HEIGHT = 30; // size for text level
 
-const int MAHJONG_WIDTH = 720; // Base on Mahjong.png size
-const int MAHJONG_HEGHT = 540; // Base on Mahjong.png size
-
 const int SEGMENT_COUNT_EXIST = 20; // Number of times line is appear when 2 tiles are matched
 
 #ifdef __MAIN_H

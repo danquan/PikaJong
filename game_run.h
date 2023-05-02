@@ -5,7 +5,7 @@
 
 void gameRender(); // Render play screen
     void render_infoTable(); // render info table
-    void render_MahJongTile(cellStatus &cell); // render a tile on table
+    void render_MahJongTile(LTexture &cell); // render a tile on table
 void assignLevel(const std::string &lv); // set level for game
 void createBackButton(); // use for back button
 void createWinScreen(); // create win screen

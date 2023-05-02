@@ -14,10 +14,10 @@
 #include "textures.h"
 #include "game_run.h"
 
-cellStatus cellStartButton, cellContinueButton;
 SDL_Rect configTable;
-cellStatus level_text;
-cellStatus chosen_level, next_Level, prev_Level;
+LText level_text, chosen_level;
+LButton next_Level, prev_Level;
+LButton cellStartButton, cellContinueButton;
 
 bool canContinue = false; // if player can continue the remaining game
 
@@ -46,9 +46,17 @@ void menuRender()
     cellStartButton.Render(gRenderer);
 }
 
+// use to change screen set when play another level
+void updateLevel() {
+    SDL_Rect dstRect = *chosen_level.getRect();
+    SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\/comic-sans.ttf", 40, dstRect, {255, 255, 255});
+    chosen_level.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
+    canContinue = false;
+}
+
 void processMenuMouseDown(int x, int y)
 {
-
+    // Start new game
     if (Inside(*cellStartButton.getRect(), {x, y}))
     {
         currentScreen = GAME_SCREEN;
@@ -62,6 +70,7 @@ void processMenuMouseDown(int x, int y)
         return;
     }
 
+    // Continue playing game
     if (canContinue && Inside(*cellContinueButton.getRect(), {x, y}))
     {
         currentScreen = GAME_SCREEN;
@@ -73,20 +82,16 @@ void processMenuMouseDown(int x, int y)
         return;
     }
 
+    // next_level
     if(Inside(*next_Level.getRect(), {x, y})) {
         currentLevel = currentLevel == (int)list_levels.size() - 1 ? 0 : currentLevel + 1;
-        SDL_Rect dstRect = *chosen_level.getRect();
-        SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\/comic-sans.ttf", 40, dstRect, {255, 255, 255});
-        chosen_level.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
-        canContinue = false;
+        updateLevel(); // update screen
     }
 
+    // previous level
     if(Inside(*prev_Level.getRect(), {x, y})) {
         currentLevel = currentLevel == 0 ? (int)list_levels.size() - 1 : currentLevel - 1;
-        SDL_Rect dstRect = *chosen_level.getRect();
-        SDL_Texture *tempTexture = text_to_texture(gRenderer, list_levels[currentLevel], "fonts\/comic-sans.ttf", 40, dstRect, {255, 255, 255});
-        chosen_level.set(tempTexture, {(configTable.w - dstRect.w) / 2 + configTable.x, dstRect.y, dstRect.w, dstRect.h});
-        canContinue = false;
+        updateLevel(); // update screen
     }
 }
 

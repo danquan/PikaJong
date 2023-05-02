@@ -25,14 +25,15 @@ int par[MAX_ROWS + 2][MAX_COLUMNS + 2][2][3]; // for BFS Search and trace
 int numCols, numRows, numRemains;
 SDL_Rect table,                          // where to show tiles
     infoTable;                           // where to show informations
-cellStatus cell[MAX_ROWS][MAX_COLUMNS];  // status of cells in table
+Pika_Tile cell[MAX_ROWS][MAX_COLUMNS];  // status of cells in table
 bool isDisappear[MAX_ROWS][MAX_COLUMNS]; // use if tile has been deleted
 bool isChosen[MAX_ROWS][MAX_COLUMNS];    // use if tle has been chosen
 
 int numChosen;
 SDL_Point posChosen[2];
 
-cellStatus cellBackButton, winScreen;
+LButton cellBackButton;
+LTexture winScreen;
 std::vector<traceSegment> segments; // use to show trace when 2 tiles are disappeared
 
 extern bool canContinue; // if player can continue the remaining game
@@ -65,7 +66,9 @@ void gameRender()
         // Play Music
         if (Mix_PlayingMusic() == 0)
         {
+            SetVolume(60);
             Mix_PlayChannel(-1, chunks[START_CHUNK], 0);
+            SetVolume(100);
             Mix_PlayMusic(musics[GAME_LOOP_MUSIC], -1);
         }
 
@@ -107,7 +110,7 @@ void gameRender()
 }
 
 // Render one tile on the table
-void render_MahJongTile(cellStatus &cell)
+void render_MahJongTile(LTexture &cell)
 {
     SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, cell.getRect()); // Render background tile
 
@@ -237,28 +240,31 @@ void processGameMouseDown(int x, int y)
     }
 
     // Otherwise, find the cell that player click
-    for (int i = 0; i < numRows; ++i)
-        for (int j = 0; j < numCols; ++j)
-            if (!isDisappear[i][j] && Inside(*cell[i][j].getRect(), {x, y}))
-            {
-                isChosen[i][j] = !isChosen[i][j];
+    if (currentScreen == GAME_SCREEN) // only game screen need it
+    { 
+        for (int i = 0; i < numRows; ++i)
+            for (int j = 0; j < numCols; ++j)
+                if (!isDisappear[i][j] && Inside(*cell[i][j].getRect(), {x, y}))
+                {
+                    isChosen[i][j] = !isChosen[i][j];
 
-                if (isChosen[i][j]) // new chosen tile
-                    posChosen[numChosen++] = {i, j};
-                else
-                    --numChosen;
+                    if (isChosen[i][j]) // new chosen tile
+                        posChosen[numChosen++] = {i, j};
+                    else
+                        --numChosen;
 
-                goto done_click;
-            }
-done_click:;
+                    goto done_click;
+                }
+    done_click:;
 
-    if (numChosen == 2)
-    {
-        tryConnectChosenTiles();
+        if (numChosen == 2)
+        {
+            tryConnectChosenTiles();
 
-        isChosen[posChosen[0].x][posChosen[0].y] = false;
-        isChosen[posChosen[1].x][posChosen[1].y] = false;
-        numChosen = 0;
+            isChosen[posChosen[0].x][posChosen[0].y] = false;
+            isChosen[posChosen[1].x][posChosen[1].y] = false;
+            numChosen = 0;
+        }
     }
 }
 
