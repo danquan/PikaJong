@@ -26,37 +26,10 @@ const int CELL_HEIGHT = 60 + 3; // We add 1 for a pixel between 2 tiles
 const int MAX_ROWS = 11;
 const int MAX_COLUMNS = 20;
 
-// Number of model of tile
-const int NUM_TILES = 33;// Base on number of tiles in list_tiles.txt
-const int MAX_NUM_TEXTURES = NUM_TILES + 14; 
-/* 
-winScreen, startButton * 2 (mouse out and mouse over), backButton * 2 (mouse out and mouse over), continueButton * 2(...)
-Highlight, frontTile, backGround
-nextLevel * 2 (mouse over), prevLevel * 2 (mouse over)
-*/
-const int MAX_MUSICS = 2; // maximum number of musics used
+const int MAX_NUM_TILES = 33; // base on the number of lines in file list_tiles.txt
+const int MAX_NUM_THEMES = 2; // base on the number of lines in file list_themes.txt
 
-const int LEVEL_WIDTH = 120; // size for text level
-const int LEVEL_HEIGHT = 30; // size for text level
-
-const int SEGMENT_COUNT_EXIST = 20; // Number of times line is appear when 2 tiles are matched
-
-#ifdef __MAIN_H
-    SDL_Texture* textures[MAX_NUM_TEXTURES]; // for storing textures
-    Mix_Music *musics[MAX_MUSICS];
-    Mix_Chunk *chunks[MAX_MUSICS];
-#else
-    extern SDL_Texture* textures[MAX_NUM_TEXTURES];// for storing textures
-    extern Mix_Music *musics[MAX_MUSICS];
-    extern Mix_Chunk *chunks[MAX_MUSICS];
-    extern SDL_Renderer *gRenderer;
-#endif
-
-enum type_Tiles {
-    RANDOM_TYPE,
-    BLACK_TILE,
-    REGULAR_TILE
-};
+const int SEGMENT_COUNT_EXIST = 17; // Number of times line is appear when 2 tiles are matched
 
 enum type_Screen {
     MENU_SCREEN,
@@ -65,30 +38,43 @@ enum type_Screen {
 };
 
 enum name_Music{
-    THEME_MUSIC = 0,
-    GAME_LOOP_MUSIC = 1
+    THEME_MUSIC,
+    GAME_LOOP_MUSIC,
+    MAX_MUSICS
 };
 
 enum name_Chunk{
-    START_CHUNK = 0,
-    WIN_CHUNK = 1
+    START_CHUNK,
+    WIN_CHUNK,
+    MAX_CHUNKS
 };  
 
+// Consider BUTTON_MOUSEOVER ^ 1 = BUTTON
 enum name_Texture{
-    SCREEN_WIN = NUM_TILES,
-    BACK_BUTTON = NUM_TILES + 1,
-    BACK_BUTTON_MOUSEOVER = NUM_TILES + 7,
-    START_BUTTON = NUM_TILES + 2,
-    START_BUTTON_MOUSEOVER = NUM_TILES + 3,
-    HIGH_LIGHT = NUM_TILES + 4,
-    TILE_FRONT = NUM_TILES + 5,
-    BACK_GROUND = NUM_TILES + 6,
-    CONTINUE_BUTTON = NUM_TILES + 8,
-    CONTINUE_BUTTON_MOUSEOVER = NUM_TILES + 9,
-    NEXT_LEVEL = NUM_TILES + 10,
-    NEXT_LEVEL_MOUSEOVER = NUM_TILES + 11,
-    PREV_LEVEL = NUM_TILES + 12,
-    PREV_LEVEL_MOUSEOVER = NUM_TILES + 13
+    TEXTURE_BACK_BUTTON,
+    TEXTURE_BACK_BUTTON_MOUSEOVER,
+    TEXTURE_START_BUTTON,
+    TEXTURE_START_BUTTON_MOUSEOVER,
+    TEXTURE_CONTINUE_BUTTON,
+    TEXTURE_CONTINUE_BUTTON_MOUSEOVER,
+    TEXTURE_BACK_GROUND,
+    TEXTURE_SCRREEN_WIN,
+    TEXTURE_HIGH_LIGHT,
+    MAX_NUM_TEXTURES
 };
+
+#ifdef __MAIN_H
+    SDL_Texture* textures[MAX_NUM_THEMES][MAX_NUM_TEXTURES]; // for storing textures
+    SDL_Texture* tiles[MAX_NUM_THEMES][MAX_NUM_TILES];
+    Mix_Music *musics[MAX_NUM_THEMES][MAX_MUSICS];
+    Mix_Chunk *chunks[MAX_NUM_THEMES][MAX_CHUNKS];
+#else
+    extern SDL_Texture* textures[MAX_NUM_THEMES][MAX_NUM_TEXTURES];// for storing textures
+    extern SDL_Texture* tiles[MAX_NUM_THEMES][MAX_NUM_TILES];
+    extern Mix_Music *musics[MAX_NUM_THEMES][MAX_MUSICS];
+    extern Mix_Chunk *chunks[MAX_NUM_THEMES][MAX_CHUNKS];
+    extern SDL_Renderer *gRenderer;
+#endif
+
 
 #endif

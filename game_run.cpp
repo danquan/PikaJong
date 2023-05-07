@@ -32,7 +32,13 @@ bool isChosen[MAX_ROWS][MAX_COLUMNS];    // use if tle has been chosen
 int numChosen;
 SDL_Point posChosen[2];
 
-LButton cellBackButton;
+enum GAME_BUTTON{
+    BUTTON_BACK,
+    MAX_GAME_BUTTONS
+};
+
+LButton game_Button[MAX_GAME_BUTTONS];
+
 LTexture winScreen;
 std::vector<traceSegment> segments; // use to show trace when 2 tiles are disappeared
 
@@ -42,6 +48,7 @@ std::string level;
 int score;
 
 extern type_Screen currentScreen; // type_Screen
+extern int currentTheme; 
 
 void gameRender()
 {
@@ -52,14 +59,14 @@ void gameRender()
         if (Mix_PlayingMusic() != 0)
         {
             Mix_HaltMusic();
-            SetVolume(40);
-            Mix_PlayChannel(-1, chunks[WIN_CHUNK], 0);
+            //SetVolume(40);
+            Mix_PlayChannel(-1, chunks[currentTheme][WIN_CHUNK], 0);
         }
 
         winScreen.Render(gRenderer);
 
         // Render Button
-        cellBackButton.Render(gRenderer);
+        game_Button[BUTTON_BACK].Render(gRenderer);
     }
     else
     {
@@ -67,13 +74,13 @@ void gameRender()
         if (Mix_PlayingMusic() == 0)
         {
             SetVolume(60);
-            Mix_PlayChannel(-1, chunks[START_CHUNK], 0);
+            Mix_PlayChannel(-1, chunks[currentTheme][START_CHUNK], 0);
             SetVolume(100);
-            Mix_PlayMusic(musics[GAME_LOOP_MUSIC], -1);
+            Mix_PlayMusic(musics[currentTheme][GAME_LOOP_MUSIC], -1);
         }
 
         // Render Button
-        cellBackButton.Render(gRenderer);
+        game_Button[BUTTON_BACK].Render(gRenderer);
 
         // render information table
         render_infoTable();
@@ -85,13 +92,13 @@ void gameRender()
                 if (!isDisappear[i][j])
                 {
                     // render tile located at cell (i, j)
-                    render_MahJongTile(cell[i][j]);
+                    cell[i][j].Render(gRenderer);
 
                     if (isChosen[i][j])
-                        SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, cell[i][j].getRect());
+                        SDL_RenderCopy(gRenderer, textures[currentTheme][TEXTURE_HIGH_LIGHT], NULL, cell[i][j].getRect());
                 }
                 else
-                    SDL_RenderCopy(gRenderer, textures[HIGH_LIGHT], NULL, cell[i][j].getRect());
+                    SDL_RenderCopy(gRenderer, textures[currentTheme][TEXTURE_HIGH_LIGHT], NULL, cell[i][j].getRect());
             }
 
         // Render Trace Segment
@@ -109,24 +116,15 @@ void gameRender()
     }
 }
 
-// Render one tile on the table
-void render_MahJongTile(LTexture &cell)
-{
-    SDL_RenderCopy(gRenderer, textures[TILE_FRONT], NULL, cell.getRect()); // Render background tile
-
-    SDL_Rect tempDstRect = *cell.getRect();
-    tempDstRect.x += 2; // minimize tile
-    tempDstRect.y += 2; // minimize tile
-    tempDstRect.w -= 4; // minimize tile
-    tempDstRect.h -= 4; // minimize tile
-
-    SDL_RenderCopy(gRenderer, cell.getTexture(), NULL, &tempDstRect);
-}
-
 void render_infoTable()
 {
     // render Infotable
     draw_rect_with_alpha(gRenderer, infoTable, 0xff, 0xff, 0xff, 128);
+
+    /*
+        SCORES
+        `score`
+    */
 
     /*--- RenderScore ---*/
     SDL_Rect tempDstRect = {0, infoTable.y + 15, 0, 0};
@@ -142,6 +140,12 @@ void render_infoTable()
                    tempTexture,                                                                                     // text
                    {(infoTable.w - tempDstRect.w) / 2 + infoTable.x, tempDstRect.y, tempDstRect.w, tempDstRect.h}); // dstRect
     tempDstRect.y += tempDstRect.h + 20;
+
+    /*
+        REMAINING
+        TILE
+        `numRemains`
+    */
 
     // Render Remaining Tiles
     tempTexture = text_to_texture(gRenderer, "REMAINING", "fonts\/comic-sans-bold.ttf", 30, tempDstRect, {0, 0, 0});
@@ -167,13 +171,13 @@ void createBackButton()
     int backButton_Width = 113;
     int backButton_Height = 68;
     SDL_Rect dstRect = {(SCREEN_WIDTH / 9 - backButton_Width) / 2, (SCREEN_HEIGHT / 9 - backButton_Height) / 2, backButton_Width, backButton_Height};
-    cellBackButton.set(textures[BACK_BUTTON], dstRect);
+    game_Button[BUTTON_BACK].set(textures[currentTheme][TEXTURE_BACK_BUTTON], dstRect);
 }
 
 void createWinScreen()
 {
     SDL_Rect dstRect = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
-    winScreen.set(textures[SCREEN_WIN], dstRect);
+    winScreen.set(textures[currentTheme][TEXTURE_SCRREEN_WIN], dstRect);
 }
 
 void createGameScreen()
@@ -184,13 +188,13 @@ void createGameScreen()
 
 void processGameMouseOver(int x, int y)
 {
-    if (Inside(*cellBackButton.getRect(), {x, y}))
+    if (Inside(*game_Button[BUTTON_BACK].getRect(), {x, y}))
     {
-        cellBackButton.set(textures[BACK_BUTTON_MOUSEOVER], *cellBackButton.getRect());
+        game_Button[BUTTON_BACK].set(textures[currentTheme][TEXTURE_BACK_BUTTON_MOUSEOVER], *game_Button[BUTTON_BACK].getRect());
     }
     else
     {
-        cellBackButton.set(textures[BACK_BUTTON], *cellBackButton.getRect());
+        game_Button[BUTTON_BACK].set(textures[currentTheme][TEXTURE_BACK_BUTTON], *game_Button[BUTTON_BACK].getRect());
     }
 }
 
@@ -226,7 +230,7 @@ void tryConnectChosenTiles()
 
 void processGameMouseDown(int x, int y)
 {
-    if ((currentScreen == GAME_SCREEN || currentScreen == WIN_SCREEN) && Inside(*cellBackButton.getRect(), {x, y})) // Check if player go back to menu
+    if ((currentScreen == GAME_SCREEN || currentScreen == WIN_SCREEN) && Inside(*game_Button[BUTTON_BACK].getRect(), {x, y})) // Check if player go back to menu
     {
         currentScreen = MENU_SCREEN;
         canContinue = true;
@@ -393,7 +397,7 @@ void assignLevel(const std::string &lv)
             inf >> x;
 
             SDL_Rect dstRect = {j * CELL_WIDTH + table.x, i * CELL_HEIGHT + table.y, TILE_WIDTH, TILE_HEIGHT}; // TILE Size is not same as CELL Size
-            cell[i][j].set(textures[x], dstRect);
+            cell[i][j].set(tiles[currentTheme][x], dstRect);
             isDisappear[i][j] = isChosen[i][j] = false;
         }
 

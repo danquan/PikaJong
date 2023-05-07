@@ -13,6 +13,7 @@
     #include <SDL2/SDL_mixer.h>
 #endif
 
+#include <vector>
 #include "textures.h"
 #include "constant.h"
 
@@ -20,6 +21,8 @@ SDL_Window *gWindow= NULL; // Main Window
 SDL_Renderer *gRenderer = NULL; // Main gRenderer to Main Window
 
 type_Screen currentScreen = MENU_SCREEN; // type_Screen
+int currentTheme = 0;
+std::vector<std::string> list_themes;
 /*Load chunck*/
 void loadChunk(Mix_Chunk *&gChunck, std::string links);
 
@@ -30,12 +33,15 @@ void loadMusic(Mix_Music *&gMusic, std::string links);
 void loadImage(SDL_Texture* &ImageObject, const std::string &links);
 
 /*Load tiles, background,...*/
-void loadMedia(type_Tiles typeCell = RANDOM_TYPE);
+void loadMedia();
 
 /*Init WINDOW, RENDERER*/
 void initProgram();
 
 /*Close window, destroy renderer to quit*/
 void closeObject();
+
+/**/
+void read_Themes();
 
 #endif
