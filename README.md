@@ -20,12 +20,14 @@ Prerequisites:
 
 - Download and extract source code
 - Open command promt or powershell, direct to the folder that you've extracted code and type the following command to do the compiling:
-
-    >**./make**
+    - If you use command promt (cmd) then type:
+        >**make**
+    - If you use powershell then type:
+        >**./make**
 - After compiling, please check for the existence of executable file name **PikaJong.exe**
 - Then type the following command to run game:
     - If you use command promt (cmd) then type:
-        >**PikaJong.exe**
+        >**PikaJong**
     - If you use powershell then type:
         >**./PikaJong**
 
