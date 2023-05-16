@@ -47,6 +47,20 @@ Player(s) need to choose 2 tiles that:
 
 Those chosen tiles will disappear immediately
 
+# Demo
+
+These are the screenshots of my game:
+
+<p align="center">
+  <img src="./images/demo_menu.png" alt="Menu"/>
+</p>
+
+In game screen:
+
+<p align="center">
+  <img src="./images/demo_game_play.png" alt="Game Screen"/>
+</p>
+
 # Add more levels
 
 My game allows you to add your own levels; you follow the below guideline:
