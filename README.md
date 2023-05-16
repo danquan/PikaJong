@@ -49,7 +49,7 @@ Those chosen tiles will disappear immediately
 
 # Demo
 
-These are the screenshots of my game:
+These screenshots are about my game:
 
 <p align="center">
   <img src="./images/demo_menu.png" alt="Menu"/>
