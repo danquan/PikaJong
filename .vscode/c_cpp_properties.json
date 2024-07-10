@@ -4,10 +4,15 @@
             "name": "Win32",
             "includePath": [
                 "${default}",
-                "C:\\Program Files\\CodeBlocks\\MinGW\\x86_64-w64-mingw32-SDL\\bin",
                 "C:\\Program Files\\CodeBlocks\\MinGW\\bin",
-                "C:\\Program Files\\CodeBlocks\\MinGW\\x86_64-w64-mingw32-SDL\\include\\SDL2",
-                "${workspaceFolder}/x86_64-w64-mingw32-SDL/include/SDL2"
+                "${workspaceFolder}/lib/x86_64-w64-mingw32-SDL/bin",
+                "${workspaceFolder}/lib/x86_64-w64-mingw32-SDL/include/SDL2",
+                "${workspaceFolder}/graphic",
+                "${workspaceFolder}/dataconnect",
+                "${workspaceFolder}/main",
+                "${workspaceFolder}/nlohmann",
+                "${workspaceFolder}/sound",
+                "${workspaceFolder}/utils"
             ],
             "defines": [
                 "_DEBUG",
