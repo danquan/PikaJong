@@ -2,15 +2,26 @@
     "screen": [
         {
             "name": "menu",
-            "background": "images/themes/western/background.png",
-            "position" : {
-                "x": 0,
-                "y": 0,
-                "width": 800,
-                "height": 600
-            },
-            "child": [
-            ]
+            "background": "assets/western/images/background.png",
+        }, 
+        {
+            "name": "game",
+            "background": "assets/western/images/background.png",
+        },
+        {
+            "name": "win",
+            "background": "assets/western/images/background.png",
+        },
+        {
+            "name": "lose",
+            "background": "assets/western/images/background.png",
         }
     ],
+    "sound": {
+        "background": "sounds/themes/western/background.mp3",
+        "click": "sounds/themes/western/click.mp3",
+        "match": "sounds/themes/western/match.mp3",
+        "win": "sounds/themes/western/win.mp3",
+        "lose": "sounds/themes/western/lose.mp3"
+    }
 }

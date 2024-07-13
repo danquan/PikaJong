@@ -15,7 +15,7 @@ int Screen::render() {
         return 1;
     }
 
-    return Graphic::render();
+    return 0;
 }
 
 

@@ -8,13 +8,23 @@ Graphic::Graphic(std::string name, SDL_Rect position) {
     Controller::getInstance().addGraphic(this);
 }
 
-int Graphic::render() {
+int Graphic::process() {
+    if (!isActive()) {
+        return 0;
+    }
+
+    // Render this object
+    if (!render()) {
+        return 1;
+    }
+
+    // Process all childs
     for (Graphic *g : childs) {
-        if (!(g->render())) {
+        if (!(g->process())) {
             return 1;
         }
     }
-    
+
     return 0;
 }
 

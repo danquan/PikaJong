@@ -1,8 +1,72 @@
 {
     "program": "PikaJong 2.0",
     "version": "2.0.0",
-    "screen": {
+    "window": {
         "width": 800,
         "height": 600
-    }
+    },
+    "theme" : {
+        "default" : "western",
+        "all" : [
+            {
+                "name": "western",
+                "path": "data/themes/western.json"
+            },
+            {
+                "name": "ocean",
+                "path": "data/themes/ocean.json"
+            }
+        ]
+    },
+    "level": {
+        "default" : 1,
+        "all" : [
+            {
+                "name": "Level 1",
+                "path": "data/levels/level1.json"
+            },
+            {
+                "name": "Level 2",
+                "path": "data/levels/level2.json"
+            }
+        ]
+    },
+    "screen": [
+        {
+            "name": "menu",
+            "position" : {
+                "x": 0,
+                "y": 0,
+                "width": -1, 
+                "height": -1
+            },
+        },
+        {
+            "name": "game",
+            "position" : {
+                "x": 0,
+                "y": 0,
+                "width": -1, 
+                "height": -1
+            },
+        },
+        {
+            "name": "win",
+            "position" : {
+                "x": 0,
+                "y": 0,
+                "width": -1, 
+                "height": -1
+            },
+        },
+        {
+            "name": "lose",
+            "position" : {
+                "x": 0,
+                "y": 0,
+                "width": -1, 
+                "height": -1
+            },
+        }
+    ]
 }

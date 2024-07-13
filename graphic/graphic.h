@@ -17,10 +17,41 @@
 class Graphic
 {
 protected:
+    /**
+     * @brief Constructor of the graphic
+     * @param name Name of the graphic
+     * @param position Position of the graphic
+     * @note This constructor is protected because Graphic is an abstract class
+     */
     Graphic(std::string name, SDL_Rect position);
+
+    /**
+     * @brief Name of the graphic
+     */
     std::string name;
-    std::vector<Graphic*> childs, parents;
+
+    /**
+     * @brief Childs of the graphic:
+     * Childs are graphics that are rendered inside this graphic. 
+     */
+    std::vector<Graphic*> childs;
+
+    /**
+     * @brief Parents of the graphic:
+     * Parents are graphics that this graphic is rendered inside.
+     */
+    std::vector<Graphic*> parents;
+
+    /**
+     * @brief Position of the graphic
+     * @note Including coordinates and size of the graphic
+     */
     SDL_Rect position;
+
+    /**
+     * @brief Check if graphic is active:
+     * `true` if active, `false` otherwise
+     */
     bool graphicActive;
 
 public:
@@ -32,8 +63,14 @@ public:
         return name;
     }
 
+    /**
+     * @brief Process this object and all its child each gameloop
+     * @return 0 if success
+     */
+    virtual int process();
+
     /*
-     * @brief Render the graphic and all its child
+     * @brief Render the graphic
      * @return 0 if success
      */
     virtual int render();

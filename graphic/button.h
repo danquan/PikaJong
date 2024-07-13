@@ -9,6 +9,8 @@
     #include <SDL2/SDL_image.h>
 #endif
 
+#include <graphic.h>
+
 class Button : public Graphic {
 private:
     SDL_Texture *buttonTexture;

@@ -1,4 +1,5 @@
 #include <button.h>
+#include <controller.h>
 
 Button::Button(SDL_Texture *texture, std::string name, SDL_Rect position) : Graphic(name, position)
 {
@@ -14,5 +15,5 @@ int Button::render() {
         return 1;
     }
 
-    return Graphic::render();
+    return 0;
 }

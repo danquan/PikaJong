@@ -12,7 +12,8 @@
                 "${workspaceFolder}/main",
                 "${workspaceFolder}/nlohmann",
                 "${workspaceFolder}/sound",
-                "${workspaceFolder}/utils"
+                "${workspaceFolder}/utils",
+                "${workspaceFolder}/lib/x86_64-w64-mingw32-SDL/include"
             ],
             "defines": [
                 "_DEBUG",
