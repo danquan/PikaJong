@@ -1,27 +1,62 @@
 {
     "screen": [
         {
-            "name": "menu",
+            "name": "screen.menu",
             "background": "assets/western/images/background.png",
         }, 
         {
-            "name": "game",
+            "name": "screen.game",
             "background": "assets/western/images/background.png",
         },
         {
-            "name": "win",
+            "name": "screen.win",
             "background": "assets/western/images/background.png",
         },
         {
-            "name": "lose",
+            "name": "screen.lose",
             "background": "assets/western/images/background.png",
         }
     ],
     "sound": {
-        "background": "sounds/themes/western/background.mp3",
-        "click": "sounds/themes/western/click.mp3",
-        "match": "sounds/themes/western/match.mp3",
-        "win": "sounds/themes/western/win.mp3",
-        "lose": "sounds/themes/western/lose.mp3"
+        "background": "assets/western/sounds/background.mp3",
+        "win": "sounds/themes/western/win.mp3"
+    },
+    "tile": {
+        "jong": {
+            "chosen": "assets/western/images/tiles/Chosen.png",
+            "chun": "assets/western/images/tiles/Chun.png",
+            "hatsu": "assets/western/images/tiles/Hatsu.png",
+            "man1": "assets/western/images/tiles/Man1.png",
+            "man2": "assets/western/images/tiles/Man2.png",
+            "man3": "assets/western/images/tiles/Man3.png",
+            "man4": "assets/western/images/tiles/Man4.png",
+            "man5": "assets/western/images/tiles/Man5.png",
+            "man6": "assets/western/images/tiles/Man6.png",
+            "man7": "assets/western/images/tiles/Man7.png",
+            "man8": "assets/western/images/tiles/Man8.png",
+            "man9": "assets/western/images/tiles/Man9.png",
+            "pin1": "assets/western/images/tiles/Pin1.png",
+            "pin2": "assets/western/images/tiles/Pin2.png",
+            "pin3": "assets/western/images/tiles/Pin3.png",
+            "pin4": "assets/western/images/tiles/Pin4.png",
+            "pin5": "assets/western/images/tiles/Pin5.png",
+            "pin6": "assets/western/images/tiles/Pin6.png",
+            "pin7": "assets/western/images/tiles/Pin7.png",
+            "pin8": "assets/western/images/tiles/Pin8.png",
+            "pin9": "assets/western/images/tiles/Pin9.png",
+            "sou1": "assets/western/images/tiles/Sou1.png",
+            "sou2": "assets/western/images/tiles/Sou2.png",
+            "sou3": "assets/western/images/tiles/Sou3.png",
+            "sou4": "assets/western/images/tiles/Sou4.png",
+            "sou5": "assets/western/images/tiles/Sou5.png",
+            "sou6": "assets/western/images/tiles/Sou6.png",
+            "sou7": "assets/western/images/tiles/Sou7.png",
+            "sou8": "assets/western/images/tiles/Sou8.png",
+            "sou9": "assets/western/images/tiles/Sou9.png",
+            "ton": "assets/western/images/tiles/Ton.png",
+            "shaa": "assets/western/images/tiles/Shaa.png",
+            "pei": "assets/western/images/tiles/Pei.png",
+            "nan": "assets/western/images/tiles/Nan.png"
+        }
     }
 }

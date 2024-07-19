@@ -18,55 +18,134 @@
             }
         ]
     },
-    "level": {
-        "default" : 1,
-        "all" : [
-            {
-                "name": "Level 1",
-                "path": "data/levels/level1.json"
-            },
-            {
-                "name": "Level 2",
-                "path": "data/levels/level2.json"
-            }
-        ]
-    },
     "screen": [
         {
-            "name": "menu",
-            "position" : {
-                "x": 0,
-                "y": 0,
-                "width": -1, 
-                "height": -1
-            },
+            "name": "screen.menu",
+            "child": [
+                "button.newgame",
+                "button.continue",
+                "button.login",
+                "button.theme",
+                "button.setting"
+            ]
         },
         {
-            "name": "game",
-            "position" : {
-                "x": 0,
-                "y": 0,
-                "width": -1, 
-                "height": -1
-            },
+            "name": "screen.game",
+            "child": [
+                "button.onestepback",
+                "button.pause",
+                "button.hint",
+                "button.backhome"
+            ]
         },
         {
-            "name": "win",
-            "position" : {
-                "x": 0,
-                "y": 0,
-                "width": -1, 
-                "height": -1
-            },
+            "name": "screen.win",
+            "child": [
+                "button.backhome",
+                "button.newgame"
+            ]
         },
         {
-            "name": "lose",
-            "position" : {
-                "x": 0,
-                "y": 0,
-                "width": -1, 
-                "height": -1
-            },
+            "name": "screen.lose",
+            "child": [
+                "button.backhome",
+                "button.newgame"
+            ]
         }
-    ]
+    ],
+    "button": [
+        {
+            "name": "button.newgame",
+            "child": []
+        },
+        {
+            "name": "button.continue",
+            "child": []
+        }, 
+        {
+            "name": "button.login",
+            "child": []
+        },
+        {
+            "name": "button.theme",
+            "child": []
+        },
+        {
+            "name": "button.setting",
+            "child": []
+        },
+        {
+            "name": "button.onestepback",
+            "child": []
+        },
+        {
+            "name": "button.pause",
+            "child": []
+        },
+        {
+            "name": "button.hint",
+            "child": []
+        },
+        {
+            "name": "button.backhome",
+            "child": []
+        },
+        {
+            "name": "button.mute",
+            "child": []
+        }
+    ],
+    "canvas": [
+        {
+            "name": "canvas.setting",
+            "child": [
+                "button.mute"
+            ]
+        },
+        {
+            "name": "canvas.theme",
+            "child": []
+        },
+        {
+            "name": "canvas.login",
+            "child": []
+        },
+        {
+            "name": "canvas.table",
+            "child": []
+        },
+        {
+            "name": "canvas.win",
+            "child": []
+        },
+        {
+            "name": "canvas.lose",
+            "child": []
+        },
+    ],
+    "level": {
+        "default": "1",
+        "all": [
+            {
+                "name": "1",
+                "path": "data/levels/level1.json",
+                "next": "2"
+            },
+            {
+                "name": "2",
+                "path": "data/levels/level2.json",
+                "next": "3"
+            },
+            {
+                "name": "3",
+                "path": "data/levels/level3.json",
+                "next": "4"
+            },
+            {
+                "name": "4",
+                "path": "data/levels/level4.json",
+                "next": "-1"
+            }
+        ]
+    }
 }
