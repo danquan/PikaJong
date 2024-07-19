@@ -1,0 +1,15 @@
+# Ignore all
+/*
+
+# Except
+!assets
+!data
+!dataconnect
+!graphic
+!lib
+!nlohmann
+!main
+!sound
+!utils
+!.gitignore
+!CMakeLists.txt
