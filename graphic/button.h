@@ -1,14 +1,9 @@
 #ifndef __BUTTON_H
 #define __BUTTON_H
 
-#ifdef (__WIN64) || (__WIN32)
-    #include <SDL.h>
-    #include <SDL_image.h>
-#else
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-#endif
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <graphic.h>
 
 class Button : public Graphic {

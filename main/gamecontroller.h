@@ -1,7 +1,6 @@
 #ifndef __GAME_RUN_H
 #define __GAME_RUN_H
 
-#include "textures.h"
 
 void gameRender(); // Render play screen
     void render_infoTable(); // render info table

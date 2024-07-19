@@ -1,13 +1,8 @@
 #ifndef __CHUNK_H
 #define __CHUNK_H
 
-#if defined(_WIN64) || defined(_WIN32)
-#include <SDL.h>
-#include <SDL_mixer.h>
-#else
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
-#endif
 
 #include <string>
 #include <sound.h>
@@ -19,7 +14,15 @@ private:
     int channel;
 
 public:
-    Chunk(int chanel = -1, Mix_Chunk *chunk, std::string name, int volume = 0);
+
+    /**
+     * @brief Constructor of Chunk
+     * @param chunk Chunk file
+     * @param name Name of Chunk
+     * @param volume Volume of chunk
+     * @param channel Channel where this chunk played on
+     */
+    Chunk(Mix_Chunk *chunk, std::string name, int volume = 0, int channel = -1);
 
     /**
      * @brief Set the volume of the sound

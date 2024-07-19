@@ -1,5 +1,5 @@
 #include <controller.h>
-#include <json.h>
+#include <nlohmann/json.h>
 #include <fstream>
 
 using json = nlohmann::json;
@@ -53,6 +53,7 @@ int Controller::setUp(std::string configPath) {
 void Controller::clearScreen() {
     SDL_SetRenderDrawColor(gRenderer, 255, 178, 102, 255);
     SDL_RenderClear(gRenderer);
+
 }
 
 void Controller::quit() {

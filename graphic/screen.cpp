@@ -1,5 +1,5 @@
 #include <screen.h>
-#include <controller.h>
+#include <main/controller.h>
 
 Screen::Screen(SDL_Texture *background, std::string name, SDL_Rect position) : Graphic(name, position)
 {

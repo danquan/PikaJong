@@ -1,17 +1,10 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#if defined(_WIN64) || defined(_WIN32)
-    #include <SDL.h>
-    #include <SDL_image.h>
-    #include <SDL_ttf.h>
-    #include <SDL_mixer.h>
-#else
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL_ttf.h>
-    #include <SDL2/SDL_mixer.h>
-#endif
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 const char* CONFIG_PATH = "data\\config\\config.json";
 

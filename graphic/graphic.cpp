@@ -1,10 +1,12 @@
 #include <graphic.h>
-#include <controller.h>
+#include <main/controller.h>
 
 Graphic::Graphic(std::string name, SDL_Rect position) {
     this->name = name;
     this->graphicActive = false;
     this->position = position;
+    this->scaleRate = {1, 1};
+    this->velocity = {0, 0};
     Controller::getInstance().addGraphic(this);
 }
 

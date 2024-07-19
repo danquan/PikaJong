@@ -1,5 +1,5 @@
 #include <jong.h>
-#include <controller.h>
+#include <main/controller.h>
 
 Jong::Jong(SDL_Texture *jong, std::string name, SDL_Rect position) : Graphic(name, position)
 {

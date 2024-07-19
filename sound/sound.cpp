@@ -1,5 +1,5 @@
 #include <sound.h>
-#include <controller.h>
+#include <main/controller.h>
 
 Sound::Sound(std::string name, int volume) {
     this->name = name;

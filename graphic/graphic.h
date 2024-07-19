@@ -1,18 +1,15 @@
 #ifndef __GRAPHIC_H
 #define __GRAPHIC_H
 
-#if defined(_WIN64) || defined(_WIN32)
-    #include <SDL.h>
-    #include <SDL_image.h>
-    #include <SDL_ttf.h>
-#else
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL_ttf.h>
-#endif
 
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <vector>
+
+/*Vector is the same as point*/
+#define SDL_Vector SDL_Point
 
 class Graphic
 {
@@ -47,6 +44,17 @@ protected:
      * @note Including coordinates and size of the graphic
      */
     SDL_Rect position;
+
+    /**
+     * @brief Scale rate of the graphic
+     * @note This is used to scale the graphic in the render process
+     */
+    SDL_Vector scaleRate;
+
+    /**
+     * @brief Velocity of the graphic in pixels per game loop
+     */
+    SDL_Vector velocity;
 
     /**
      * @brief Check if graphic is active:

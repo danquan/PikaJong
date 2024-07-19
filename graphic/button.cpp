@@ -1,5 +1,5 @@
 #include <button.h>
-#include <controller.h>
+#include <main/controller.h>
 
 Button::Button(SDL_Texture *texture, std::string name, SDL_Rect position) : Graphic(name, position)
 {

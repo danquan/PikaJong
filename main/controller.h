@@ -5,22 +5,16 @@ renderer, and handle events and all objects.
 
 #ifndef __SYSTEM_CONTROLLER_H
 #define __SYSTEM_CONTROLLER_H
-#if defined(_WIN64) || defined(_WIN32)
-    #include <SDL.h>
-    #include <SDL_image.h>
-    #include <SDL_ttf.h>
-    #include <SDL_mixer.h>
-#else
-    #include <SDL2/SDL.h>
-    #include <SDL2/SDL_image.h>
-    #include <SDL2/SDL_ttf.h>
-    #include <SDL2/SDL_mixer.h>
-#endif
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 #include <string>
 #include <map>
-#include <graphic.h>
-#include <sound.h>
+#include <graphic/graphic.h>
+#include <sound/sound.h>
 
 enum EventStatus {
     SUCESS = 0,
@@ -31,7 +25,6 @@ enum EventStatus {
 class Controller
 {
 private:
-    static Controller *instance;
     SDL_Window *gWindow; // Main Window
     SDL_Renderer *gRenderer; // Main gRenderer to Main Window
     std::map<std::string, Graphic*> listGraphic;
@@ -43,10 +36,8 @@ public:
      * @brief Get instance of Controller
      */
     static Controller getInstance() {
-        if (instance == NULL) {
-            instance = new Controller();
-        }
-        return *instance;
+        static Controller instance;
+        return instance;
     }
 
     /*

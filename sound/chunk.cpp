@@ -1,8 +1,9 @@
 #include <chunk.h>
 
-Chunk::Chunk(int chanel, Mix_Chunk *chunk, std::string name, int volume) : Sound(name, volume) {
+Chunk::Chunk(Mix_Chunk *chunk, std::string name, int volume, int channel) : Sound(name, volume)
+{
     this->chunk = chunk;
-    this->channel = chanel;
+    this->channel = channel;
 }
 
 void Chunk::setVolume(int volume) {
