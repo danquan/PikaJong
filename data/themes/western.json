@@ -1,62 +1,442 @@
 {
-    "screen": [
-        {
-            "name": "screen.menu",
-            "background": "assets/western/images/background.png",
-        }, 
-        {
-            "name": "screen.game",
-            "background": "assets/western/images/background.png",
+    "graphic": {
+        "defaultSize": {
+            "width": 800,
+            "height": 600
         },
-        {
-            "name": "screen.win",
-            "background": "assets/western/images/background.png",
-        },
-        {
-            "name": "screen.lose",
-            "background": "assets/western/images/background.png",
+        "screen": [
+            {
+                "name": "screen.menu",
+                "background": "western/images/backgrounds/background.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            }, 
+            {
+                "name": "screen.game",
+                "background": "western/images/backgrounds/background.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "screen.win",
+                "background": "western/images/backgrounds/background.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "screen.lose",
+                "background": "western/images/backgrounds/background.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            }
+        ],
+        "button" : [
+            {
+                "name": "button.newgame",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.continue",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.login",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.theme",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.setting",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.onestepback",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.pause",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.hint",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.backhome",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "button.mute",
+                "image" : "western/images/buttons/continue_Button.png",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            }
+        ],
+        "canvas": [
+            {
+                "name": "canvas.setting",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "canvas.theme",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "canvas.login",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "canvas.table",
+                "position": {
+                    "x": 0, 
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "canvas.win",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            },
+            {
+                "name": "canvas.lose",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": -1,
+                    "height": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1
+                }
+            }
+        ],
+        "tile": {
+            "jong": [
+
+                {
+                    "name": "chosen",
+                    "path": "western/images/tiles/Chosen.png"
+                },
+                {
+                    "name": "chun",
+                    "path": "western/images/tiles/Chun.png"
+                },
+                {
+                    "name": "hatsu",
+                    "path": "western/images/tiles/Hatsu.png"
+                },
+                {
+                    "name": "man1",
+                    "path": "western/images/tiles/Man1.png"
+                },
+                {
+                    "name": "man2",
+                    "path": "western/images/tiles/Man2.png"
+                },
+                {
+                    "name": "man3",
+                    "path": "western/images/tiles/Man3.png"
+                },
+                {
+                    "name": "man4",
+                    "path": "western/images/tiles/Man4.png"
+                },
+                {
+                    "name": "man5",
+                    "path": "western/images/tiles/Man5.png"
+                },
+                {
+                    "name": "man6",
+                    "path": "western/images/tiles/Man6.png"
+                },
+                {
+                    "name": "man7",
+                    "path": "western/images/tiles/Man7.png"
+                },
+                {
+                    "name": "man8",
+                    "path": "western/images/tiles/Man8.png"
+                },
+                {
+                    "name": "man9",
+                    "path": "western/images/tiles/Man9.png"
+                },
+                {
+                    "name": "pin1",
+                    "path": "western/images/tiles/Pin1.png"
+                },
+                {
+                    "name": "pin2",
+                    "path": "western/images/tiles/Pin2.png"
+                },
+                {
+                    "name": "pin3",
+                    "path": "western/images/tiles/Pin3.png"
+                },
+                {
+                    "name": "pin4",
+                    "path": "western/images/tiles/Pin4.png"
+                },
+                {
+                    "name": "pin5",
+                    "path": "western/images/tiles/Pin5.png"
+                },
+                {
+                    "name": "pin6",
+                    "path": "western/images/tiles/Pin6.png"
+                },
+                {
+                    "name": "pin7",
+                    "path": "western/images/tiles/Pin7.png"
+                },
+                {
+                    "name": "pin8",
+                    "path": "western/images/tiles/Pin8.png"
+                },
+                {
+                    "name": "pin9",
+                    "path": "western/images/tiles/Pin9.png"
+                },
+                {
+                    "name": "sou1",
+                    "path": "western/images/tiles/Sou1.png"
+                },
+                {
+                    "name": "sou2",
+                    "path": "western/images/tiles/Sou2.png"
+                },
+                {
+                    "name": "sou3",
+                    "path": "western/images/tiles/Sou3.png"
+                },
+                {
+                    "name": "sou4",
+                    "path": "western/images/tiles/Sou4.png"
+                },
+                {
+                    "name": "sou5",
+                    "path": "western/images/tiles/Sou5.png"
+                },
+                {
+                    "name": "sou6",
+                    "path": "western/images/tiles/Sou6.png"
+                },
+                {
+                    "name": "sou7",
+                    "path": "western/images/tiles/Sou7.png"
+                },
+                {
+                    "name": "sou8",
+                    "path": "western/images/tiles/Sou8.png"
+                },
+                {
+                    "name": "sou9",
+                    "path": "western/images/tiles/Sou9.png"
+                },
+                {
+                    "name": "ton",
+                    "path": "western/images/tiles/Ton.png"
+                },
+                {
+                    "name": "shaa",
+                    "path": "western/images/tiles/Shaa.png"
+                },
+                {
+                    "name": "pei",
+                    "path": "western/images/tiles/Pei.png"
+                },
+                {
+                    "name": "nan",
+                    "path": "western/images/tiles/Nan.png"
+                }
+            ]
         }
-    ],
-    "sound": {
-        "background": "assets/western/sounds/background.mp3",
-        "win": "sounds/themes/western/win.mp3"
     },
-    "tile": {
-        "jong": {
-            "chosen": "assets/western/images/tiles/Chosen.png",
-            "chun": "assets/western/images/tiles/Chun.png",
-            "hatsu": "assets/western/images/tiles/Hatsu.png",
-            "man1": "assets/western/images/tiles/Man1.png",
-            "man2": "assets/western/images/tiles/Man2.png",
-            "man3": "assets/western/images/tiles/Man3.png",
-            "man4": "assets/western/images/tiles/Man4.png",
-            "man5": "assets/western/images/tiles/Man5.png",
-            "man6": "assets/western/images/tiles/Man6.png",
-            "man7": "assets/western/images/tiles/Man7.png",
-            "man8": "assets/western/images/tiles/Man8.png",
-            "man9": "assets/western/images/tiles/Man9.png",
-            "pin1": "assets/western/images/tiles/Pin1.png",
-            "pin2": "assets/western/images/tiles/Pin2.png",
-            "pin3": "assets/western/images/tiles/Pin3.png",
-            "pin4": "assets/western/images/tiles/Pin4.png",
-            "pin5": "assets/western/images/tiles/Pin5.png",
-            "pin6": "assets/western/images/tiles/Pin6.png",
-            "pin7": "assets/western/images/tiles/Pin7.png",
-            "pin8": "assets/western/images/tiles/Pin8.png",
-            "pin9": "assets/western/images/tiles/Pin9.png",
-            "sou1": "assets/western/images/tiles/Sou1.png",
-            "sou2": "assets/western/images/tiles/Sou2.png",
-            "sou3": "assets/western/images/tiles/Sou3.png",
-            "sou4": "assets/western/images/tiles/Sou4.png",
-            "sou5": "assets/western/images/tiles/Sou5.png",
-            "sou6": "assets/western/images/tiles/Sou6.png",
-            "sou7": "assets/western/images/tiles/Sou7.png",
-            "sou8": "assets/western/images/tiles/Sou8.png",
-            "sou9": "assets/western/images/tiles/Sou9.png",
-            "ton": "assets/western/images/tiles/Ton.png",
-            "shaa": "assets/western/images/tiles/Shaa.png",
-            "pei": "assets/western/images/tiles/Pei.png",
-            "nan": "assets/western/images/tiles/Nan.png"
-        }
+    "sound": {
+        "music": [
+            {
+                "name": "music.background",
+                "path": "western/sounds/background.mp3"
+            },
+            {
+                "name": "music.win",
+                "path": "sounds/themes/western/win.mp3"
+            }
+        ],
+        "chunk": []
     }
 }

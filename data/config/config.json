@@ -6,6 +6,7 @@
         "height": 600
     },
     "theme" : {
+        "path": "assets",
         "default" : "western",
         "all" : [
             {
@@ -18,111 +19,148 @@
             }
         ]
     },
-    "screen": [
-        {
-            "name": "screen.menu",
-            "child": [
-                "button.newgame",
-                "button.continue",
-                "button.login",
-                "button.theme",
-                "button.setting"
-            ]
-        },
-        {
-            "name": "screen.game",
-            "child": [
-                "button.onestepback",
-                "button.pause",
-                "button.hint",
-                "button.backhome"
-            ]
-        },
-        {
-            "name": "screen.win",
-            "child": [
-                "button.backhome",
-                "button.newgame"
-            ]
-        },
-        {
-            "name": "screen.lose",
-            "child": [
-                "button.backhome",
-                "button.newgame"
-            ]
-        }
-    ],
-    "button": [
-        {
-            "name": "button.newgame",
-            "child": []
-        },
-        {
-            "name": "button.continue",
-            "child": []
-        }, 
-        {
-            "name": "button.login",
-            "child": []
-        },
-        {
-            "name": "button.theme",
-            "child": []
-        },
-        {
-            "name": "button.setting",
-            "child": []
-        },
-        {
-            "name": "button.onestepback",
-            "child": []
-        },
-        {
-            "name": "button.pause",
-            "child": []
-        },
-        {
-            "name": "button.hint",
-            "child": []
-        },
-        {
-            "name": "button.backhome",
-            "child": []
-        },
-        {
-            "name": "button.mute",
-            "child": []
-        }
-    ],
-    "canvas": [
-        {
-            "name": "canvas.setting",
-            "child": [
-                "button.mute"
-            ]
-        },
-        {
-            "name": "canvas.theme",
-            "child": []
-        },
-        {
-            "name": "canvas.login",
-            "child": []
-        },
-        {
-            "name": "canvas.table",
-            "child": []
-        },
-        {
-            "name": "canvas.win",
-            "child": []
-        },
-        {
-            "name": "canvas.lose",
-            "child": []
-        },
-    ],
+    "graphic": {
+        "screen": [
+            {
+                "name": "screen.menu",
+                "child": [
+                    "button.newgame",
+                    "button.continue",
+                    "button.login",
+                    "button.theme",
+                    "button.setting"
+                ], 
+                "actived" : true
+            },
+            {
+                "name": "screen.game",
+                "child": [
+                    "button.onestepback",
+                    "button.pause",
+                    "button.hint",
+                    "button.backhome"
+                ],
+                "actived": false
+            },
+            {
+                "name": "screen.win",
+                "child": [
+                    "button.backhome",
+                    "button.newgame"
+                ],
+                "actived": false
+            },
+            {
+                "name": "screen.lose",
+                "child": [
+                    "button.backhome",
+                    "button.newgame"
+                ],
+                "actived": false
+            }
+        ],
+        "button": [
+            {
+                "name": "button.newgame",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.continue",
+                "child": [],
+                "actived": false
+            }, 
+            {
+                "name": "button.login",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.theme",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.setting",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.onestepback",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.pause",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.hint",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.backhome",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "button.mute",
+                "child": [],
+                "actived": false
+            }
+        ],
+        "canvas": [
+            {
+                "name": "canvas.setting",
+                "child": [
+                    "button.mute"
+                ],
+                "actived": false
+            },
+            {
+                "name": "canvas.theme",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "canvas.login",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "canvas.table",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "canvas.win",
+                "child": [],
+                "actived": false
+            },
+            {
+                "name": "canvas.lose",
+                "child": [],
+                "actived": false
+            }
+        ]
+    },
+    "sound": {
+        "music": [
+            {
+                "name": "music.background",
+                "path": "data/sounds/background.mp3",
+                "loop": true
+            },
+            {
+                "name": "music.win",
+                "path": "data/sounds/win.mp3",
+                "loop": false
+            }
+        ],
+        "chunk": []
+    },
     "level": {
         "default": "1",
         "all": [
