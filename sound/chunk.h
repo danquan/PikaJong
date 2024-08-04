@@ -5,7 +5,7 @@
 #include <SDL2/SDL_mixer.h>
 
 #include <string>
-#include <sound.h>
+#include <sound/sound.h>
 
 class Chunk : public Sound
 {
@@ -17,12 +17,22 @@ public:
 
     /**
      * @brief Constructor of Chunk
-     * @param chunk Chunk file
      * @param name Name of Chunk
      * @param volume Volume of chunk
+     * @param chunk Chunk file
      * @param channel Channel where this chunk played on
      */
-    Chunk(Mix_Chunk *chunk, std::string name, int volume = 0, int channel = -1);
+    Chunk(std::string name, int volume = 0, Mix_Chunk *chunk = NULL, int channel = -1);
+
+    /**
+     * @brief Set the chunk file
+     * @param chunk Chunk file
+     * @return 0 if success
+     */
+    int setChunk(Mix_Chunk *chunk) {
+        this->chunk = chunk;
+        return 0;
+    }
 
     /**
      * @brief Set the volume of the sound

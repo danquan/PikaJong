@@ -1,12 +1,15 @@
-#include <graphic.h>
+#include <graphic/graphic.h>
 #include <main/controller.h>
 
-Graphic::Graphic(std::string name, SDL_Rect position) {
+Graphic::Graphic(std::string name, 
+                 SDL_Rect position, 
+                 SDL_Vector scaleRate, 
+                 SDL_Vector velocity ) {
     this->name = name;
     this->graphicActive = false;
     this->position = position;
-    this->scaleRate = {1, 1};
-    this->velocity = {0, 0};
+    this->scaleRate = scaleRate;
+    this->velocity = velocity;
     Controller::getInstance().addGraphic(this);
 }
 
@@ -15,14 +18,24 @@ int Graphic::process() {
         return 0;
     }
 
-    // Render this object
-    if (!render()) {
-        return 1;
-    }
-
     // Process all childs
     for (Graphic *g : childs) {
         if (!(g->process())) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
+int Graphic::render() {
+    if (!isActive()) {
+        return 0;
+    }
+
+    // Render all childs
+    for (Graphic *g : childs) {
+        if (!(g->render())) {
             return 1;
         }
     }
@@ -51,16 +64,8 @@ int Graphic::addChild(Graphic* child) {
     return 0;
 }
 
-int Graphic::removeChild(Graphic* child) {
-    for (int i = 0; i < childs.size(); i++) {
-        if (childs[i] == child) {
-            childs[i] = childs.back();
-            childs.pop_back();
-
-            return 0;
-        }
-    }
-
-    return 1;
+int Graphic::setParent(Graphic* parent) {
+    parents.push_back(parent);
+    return 0;
 }
 

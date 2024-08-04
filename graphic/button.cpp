@@ -1,7 +1,12 @@
-#include <button.h>
+#include <graphic/button.h>
 #include <main/controller.h>
 
-Button::Button(SDL_Texture *texture, std::string name, SDL_Rect position) : Graphic(name, position)
+Button::Button( std::string name, 
+                SDL_Rect position, 
+                SDL_Vector scaleRate,
+                SDL_Vector velocity,
+                SDL_Texture *texture
+) : Graphic(name, position, scaleRate, velocity)
 {
     this->buttonTexture = texture;
 }
@@ -15,5 +20,5 @@ int Button::render() {
         return 1;
     }
 
-    return 0;
+    return Graphic::render();
 }

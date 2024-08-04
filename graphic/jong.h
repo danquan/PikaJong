@@ -5,7 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#include <graphic.h>
+#include <graphic/graphic.h>
 
 class Jong : public Graphic {
 private:

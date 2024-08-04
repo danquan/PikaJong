@@ -1,7 +1,12 @@
-#include <screen.h>
+#include <graphic/screen.h>
 #include <main/controller.h>
 
-Screen::Screen(SDL_Texture *background, std::string name, SDL_Rect position) : Graphic(name, position)
+Screen::Screen( std::string name, 
+                SDL_Rect position, 
+                SDL_Vector scaleRate,
+                SDL_Vector velocity,
+                SDL_Texture *background
+) : Graphic(name, position, scaleRate, velocity)
 {
     this->background = background;
 }
@@ -15,7 +20,7 @@ int Screen::render() {
         return 1;
     }
 
-    return 0;
+    return Graphic::render();
 }
 
 

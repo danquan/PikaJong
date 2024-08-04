@@ -1,4 +1,4 @@
-#include <sound.h>
+#include <sound/sound.h>
 #include <main/controller.h>
 
 Sound::Sound(std::string name, int volume) {

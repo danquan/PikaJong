@@ -8,7 +8,6 @@
 
 const char* CONFIG_PATH = "data\\config\\config.json";
 
-
 /*
  * @brief Main game loop
  * @return 0 if success, otherwise return error code

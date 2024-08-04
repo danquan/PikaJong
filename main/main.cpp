@@ -12,10 +12,11 @@ int gameLoop() {
         }
     }
 
-    // Clear screen
-    Controller::getInstance().clearScreen();
+    if (!Controller::getInstance().process()) {
+        return 1;
+    }
 
-    // Force Render
+    Controller::getInstance().clearScreen();
     Controller::getInstance().present();
 
     return 0;

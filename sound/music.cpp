@@ -1,6 +1,10 @@
-#include <music.h>
+#include <sound/music.h>
 
-Music::Music(Mix_Music *music, std::string name, int volume) : Sound(name, volume) {
+Music::Music(std::string name, 
+             int volume, 
+             Mix_Music *music
+) : Sound(name, volume)
+{
     this->music = music;
 }
 

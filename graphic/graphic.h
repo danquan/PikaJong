@@ -8,8 +8,12 @@
 #include <string>
 #include <vector>
 
-/*Vector is the same as point*/
-#define SDL_Vector SDL_Point
+/*Vector in graphic*/
+typedef struct SDL_RPoint
+{
+    double x;
+    double y;
+} SDL_Vector;
 
 class Graphic
 {
@@ -20,7 +24,11 @@ protected:
      * @param position Position of the graphic
      * @note This constructor is protected because Graphic is an abstract class
      */
-    Graphic(std::string name, SDL_Rect position);
+    Graphic(std::string name, 
+            SDL_Rect position = {0, 0, 0, 0}, 
+            SDL_Vector scaleRate = {1, 1}, 
+            SDL_Vector velocity = {0, 0}
+    );
 
     /**
      * @brief Name of the graphic
@@ -72,6 +80,35 @@ public:
     }
 
     /**
+     * @brief Get the position of the graphic
+     * @param position The position of the graphic
+     * @return 0 if success
+     */
+    int setPosition(SDL_Rect position) {
+        this->position = position;
+        return 0;
+    }
+
+    /**
+     * @brief Set scale rate of the graphic
+     * @param scaleRate Scale rate of the graphic
+     * @return 0 if success
+     */
+    int applyScale(SDL_Vector scaleRate) {
+        this->scaleRate.x *= scaleRate.x;
+        this->scaleRate.y *= scaleRate.y;
+        return 0;
+    }
+
+    /**
+     * @brief Check if the graphic is a root graphic (i.e. menu screen, ...)
+     * @return `true` if the graphic is a root graphic, `false` otherwise
+     */
+    bool isRoot() {
+        return parents.size() == 0;
+    }
+
+    /**
      * @brief Process this object and all its child each gameloop
      * @return 0 if success
      */
@@ -109,11 +146,11 @@ public:
     int addChild(Graphic* child);
 
     /*
-     * @brief Remove child from graphic
-     * @param child Graphic to remove
+     * @brief Set parent of graphic
+     * @param parent Graphic to set
      * @return 0 if success
      */
-    int removeChild(Graphic* child);
+    int setParent(Graphic* parent);
 };
 
 #endif
